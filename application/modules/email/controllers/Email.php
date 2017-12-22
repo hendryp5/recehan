@@ -110,12 +110,14 @@ class Email extends CI_Controller {
 				// send the mail
 				$mailed = $this->email->send();
 				// echo ("MAIL:".$mailed);
-				// redirect($origin.'/'.'form-success');
-				echo json_encode(array("success"=>TRUE));
+				// redirect($origin.'/'.'form-success'); // redirect
+				// echo json_encode(array("success"=>TRUE)); give json
+				echo "function form_result(){return true;}"; // give jsonp
 			}else{
 				
-				// redirect($origin.'/'.'form-failed');
-				echo json_encode(array("error"=>validation_errors()));
+				// redirect($origin.'/'.'form-failed'); // redirect
+				// echo json_encode(array("error"=>validation_errors())); // give json
+				echo "function form_result(){return false;}"; // give jsonp
 			}
 			
 			
