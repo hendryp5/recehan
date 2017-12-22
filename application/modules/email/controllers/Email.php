@@ -15,10 +15,10 @@ class Email extends CI_Controller {
 		$this->load->library('email');
 		$mailconfig['protocol'] = 'smtp';
 		$mailconfig['smtp_host'] = 'smtp.googlemail.com';
-		$mailconfig['smtp_user'] = 'saka.jaya.teknologi@gmail.com';
+		$mailconfig['smtp_user'] = 'saka.jaya.teknologi@gmail.com'; // TODO: use ENV var
 		$mailconfig['smtp_port'] = '587';
 		$mailconfig['smtp_timeout'] = '5';
-		$mailconfig['smtp_pass'] = 'takunibosgmail';
+		$mailconfig['smtp_pass'] = 'takunibosgmail'; // TODO: use ENV var
 		$mailconfig['smtp_crypto'] = 'tls';
 		$mailconfig['charset'] = 'utf-8';
 		$mailconfig['wordwrap'] = TRUE;
@@ -28,9 +28,9 @@ class Email extends CI_Controller {
 		$this->email->set_newline("\r\n");
 		
 		// db setup
-		$config['hostname'] = '101.50.1.41';
-		$config['username'] = 'sakasistem_users';
-		$config['password'] = 'tahun@)!&';
+		$config['hostname'] = '101.50.1.41'; // TODO: use ENV var
+		$config['username'] = 'sakasistem_users'; // TODO: use ENV var
+		$config['password'] = 'tahun@)!&'; // TODO: use ENV var
 		$config['database'] = 'sakasistem_dbase';
 		$config['dbdriver'] = 'mysqli';
 		$config['dbprefix'] = '';
@@ -42,8 +42,6 @@ class Email extends CI_Controller {
 		$config['dbcollat'] = 'utf8_general_ci';
 		$this->datadb = $this->load->database($config,TRUE);
 		$this->table_name = 'email';
-		//$this->load->model('registrasi_m', 'data');
-		//signin();
 	}
 	
 	public function index()
@@ -57,6 +55,14 @@ class Email extends CI_Controller {
 		if ($this->input->server('REQUEST_METHOD') != 'GET' || !isset($_GET['download']) || !isset($_GET['name']) /* || !isset($_GET['phone']) */ || !isset($_GET['email']) || !isset($_GET['cat'])  ) {
 			redirect('login');
 		}else{
+			if (array_key_exists('HTTP_ORIGIN', $_SERVER)) {
+			    $origin = $_SERVER['HTTP_ORIGIN'];
+			}
+			else if (array_key_exists('HTTP_REFERER', $_SERVER)) {
+			    $origin = $_SERVER['HTTP_REFERER'];
+			} else {
+			    $origin = $_SERVER['REMOTE_ADDR'];
+			}
 			
 			$from = 'saka.jaya.teknologi@gmail.com';
 			$name = 'Saka Sistem';
@@ -75,7 +81,7 @@ class Email extends CI_Controller {
 			// TODO: set design email template
 			$message = "Hai $client, terima kasih telah bargabung, silahkan download ebook yang anda minta disini : $download_link \n \n <br/><br/>
 			<center>
-			<a style='padding:15px;background:green;border:1px lime solid;' href='$download_link' >Download Ebook Saka Sistem</a>
+			<a style='padding:15px;background:green;border:1px lime solid;color:white;' href='$download_link' ><b>Download Ebook Saka Sistem</b></a>
 			</center>";
 			  
 			if ($this->validation() == TRUE){
@@ -104,9 +110,11 @@ class Email extends CI_Controller {
 				// send the mail
 				$mailed = $this->email->send();
 				// echo ("MAIL:".$mailed);
+				// redirect($origin.'/'.'form-success');
 				echo json_encode(array("success"=>TRUE));
 			}else{
-				// echo "INVALID".validation_errors();
+				
+				// redirect($origin.'/'.'form-failed');
 				echo json_encode(array("error"=>validation_errors()));
 			}
 			
@@ -123,7 +131,7 @@ private function validation($id=null)
 	$this->form_validation->set_rules('phone','Nomor Telepon','trim|required|is_natural');
 	$this->form_validation->set_rules('email','Email','trim|required|valid_email');
 	 
-  $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+  // $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
   if($this->form_validation->run()){
     $data['success'] = true;
   }else{
@@ -131,7 +139,7 @@ private function validation($id=null)
       $data['messages'][$key] = form_error($key);
     }
   }
-	// var_dump($_GET);
+	// var_dump($_GET); // need debug lib D:
   // echo json_encode($data);
   return $this->form_validation->run();
 }
