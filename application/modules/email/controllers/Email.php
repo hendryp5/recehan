@@ -15,10 +15,10 @@ class Email extends CI_Controller {
 		$this->load->library('email');
 		$mailconfig['protocol'] = 'smtp';
 		$mailconfig['smtp_host'] = 'smtp.googlemail.com';
-		$mailconfig['smtp_user'] = 'saka.jaya.teknologi@gmail.com'; // TODO: use ENV var
+		$mailconfig['smtp_user'] = 'sakasistem@gmail.com'; // TODO: use ENV var
 		$mailconfig['smtp_port'] = '587';
 		$mailconfig['smtp_timeout'] = '5';
-		$mailconfig['smtp_pass'] = 'takunibosgmail'; // TODO: use ENV var
+		$mailconfig['smtp_pass'] = 'takunibos03'; // TODO: use ENV var
 		$mailconfig['smtp_crypto'] = 'tls';
 		$mailconfig['charset'] = 'utf-8';
 		$mailconfig['wordwrap'] = TRUE;
@@ -64,7 +64,7 @@ class Email extends CI_Controller {
 			    $origin = $_SERVER['REMOTE_ADDR'];
 			}
 			
-			$from = 'saka.jaya.teknologi@gmail.com';
+			$from = 'sakasistem@gmail.com';
 			$name = 'Saka Sistem';
 			$client = $_GET['name'];
 			$cat = $_GET['cat'];
@@ -79,10 +79,25 @@ class Email extends CI_Controller {
 			
 			$subject = "Link Download Free Ebook Anda - Saka Sistem";
 			// TODO: set design email template
-			$message = "Hai $client, terima kasih telah bargabung, silahkan download ebook yang anda minta disini : $download_link \n \n <br/><br/>
+			$message = "Dear $client, <br/><br/>
+			Terima kasih telah bargabung, silahkan download ebook yang anda minta disini : \n \n <br/><br/><br/>
 			<center>
-			<a style='padding:15px;background:green;border:1px lime solid;color:white;' href='$download_link' ><b>Download Ebook Saka Sistem</b></a>
-			</center>";
+			<a style='padding:15px;background:green;border:1px lime solid;color:white;' href='$download_link' ><b>Download Ebook</b></a><br/><br/><br/>
+			<img src='http://blog.sakasistem.com/wp-content/uploads/2017/12/ebookCOVER-228x300.png' alt='Download' />
+			</center><br/><br/>
+			Kami sangat senang dapat membantu Anda, kami sangat mempersilahkan Anda untuk mengunjungi <a href='http://sakasistem.com' >Saka Sistem</a>,<br/> atau menghubungi kami melalui email <a href='mailto:sakasistem@gmail.com'>sakasistem@gmail.com</a> jika ada hal yang perlu disampaikan.<br/>
+			Nantikan berita terbaru dari kami.
+			<br/><br/>
+			
+			Regards,<br/>
+			<br/>
+			<br/>
+			<span style='color:green;'>
+			<b>Tim Saka Sistem</b><br/>
+			<i><sub>Website : sakasistem.com</sub></i>
+			</span>
+			";
+			
 			  
 			if ($this->validation() == TRUE){
 				// echo "VALID";
