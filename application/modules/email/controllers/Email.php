@@ -46,6 +46,20 @@ class Email extends CI_Controller {
 		$this->table_name = 'email';
 	}
 	
+	public function total(){
+		$phone = $this->datadb->query('select count(distinct phone) from email where id >19 && CHAR_LENGTH(phone) > 10;')->result_array();
+		$email = $this->datadb->query('select count(distinct email) from email where id >19')->result_array();
+		// var_dump($email);
+		// var_dump($phone);
+		$email = $email[0]['count(distinct email)'];
+		$phone = $phone[0]['count(distinct phone)'];
+		echo "<center>
+		<span style='font-size:54px'>Email : <b>$email</b> email unik<br/> No Telp: <b>$phone</b> nomor unik</span>
+		</center>";
+		
+		signin();
+	}
+	
 	public function index()
 	{
 		// TODO: add requirement config variables
@@ -126,10 +140,6 @@ class Email extends CI_Controller {
 					"phone"=>$hp
 				);
 				
-				// save to db
-				// TODO: handle unique data only
-				// $this->datadb->
-				$this->datadb->insert($this->table_name,$data);
 				
 				// setup mail data
 				$this->email->from($from, $name);
@@ -142,7 +152,15 @@ class Email extends CI_Controller {
 				// echo ("MAIL:".$mailed);
 				// redirect($origin.'/'.'form-success'); // redirect
 				// echo json_encode(array("success"=>TRUE)); give json
-				echo "function form_result(){return true;}"; // give jsonp
+				if (!$mailed) {
+					echo "function form_result(){return false;}";
+				}else{
+					// save to db
+					// TODO: handle unique data only
+					// $this->datadb->
+					$this->datadb->insert($this->table_name,$data);
+					echo "function form_result(){return true;}"; // give jsonp
+				}
 			}else{
 				
 				// redirect($origin.'/'.'form-failed'); // redirect
