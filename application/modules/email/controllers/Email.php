@@ -4,12 +4,14 @@ class Email extends CI_Controller {
 	/**
 	 * code by rifqie rusyadi
 	 * email rifqie.rusyadi@gmail.com
+	 *
+	 * changes by : saudara.ugi@gmail.com
 	 */
 	public $folder = 'email/';
 	
 	public function __construct()
 	{
-		// die(phpinfo());
+		
 		parent::__construct();
 		// using email utilities
 		$this->load->library('email');
@@ -18,7 +20,7 @@ class Email extends CI_Controller {
 		$mailconfig['smtp_user'] = 'sakasistem@gmail.com'; // TODO: use ENV var
 		$mailconfig['smtp_port'] = '587';
 		$mailconfig['smtp_timeout'] = '5';
-		$mailconfig['smtp_pass'] = 'takunibos03'; // TODO: use ENV var
+		$mailconfig['smtp_pass'] = 'kadatahu'; // TODO: use ENV var
 		$mailconfig['smtp_crypto'] = 'tls';
 		$mailconfig['charset'] = 'utf-8';
 		$mailconfig['wordwrap'] = TRUE;
@@ -75,16 +77,26 @@ class Email extends CI_Controller {
 				$hp = '';
 			}
 			// TODO: Secure download URL
-			$download_link = $this->input->get('download');
+			$download_link = json_decode($this->input->get('download'),TRUE);
+			// debug
+			// var_dump($this->input->get('download'));
+			// var_dump($download_link);
+			// die($download_link);
+			$message_link = "";
+			foreach($download_link as $key => $val){
+				$ebook_name = basename($val);
+				$message_link .= "<a style='padding:15px;background:green;border:1px lime solid;color:white;' href='$val' ><b>Download $ebook_name</b></a><br/><br/><br/>
+				<img src='$key' alt='Download' />
+				<br/><br/>";
+			}
 			
 			$subject = "Link Download Free Ebook Anda - Saka Sistem";
-			// TODO: set design email template
+			// TODO: configureable email template 
 			$message = "Dear $client, <br/><br/>
 			Terima kasih telah bargabung, silahkan download ebook yang anda minta disini : \n \n <br/><br/><br/>
 			<center>
-			<a style='padding:15px;background:green;border:1px lime solid;color:white;' href='$download_link' ><b>Download Ebook</b></a><br/><br/><br/>
-			<img src='http://blog.sakasistem.com/wp-content/uploads/2017/12/ebookCOVER-228x300.png' alt='Download' />
-			</center><br/><br/>
+			$message_link
+			</center>
 			Kami sangat senang dapat membantu Anda, kami sangat mempersilahkan Anda untuk mengunjungi <a href='http://sakasistem.com' >Saka Sistem</a>,<br/> atau menghubungi kami melalui email <a href='mailto:sakasistem@gmail.com'>sakasistem@gmail.com</a> jika ada hal yang perlu disampaikan.<br/>
 			Nantikan berita terbaru dari kami.
 			<br/><br/>
@@ -97,7 +109,9 @@ class Email extends CI_Controller {
 			<i><sub>Website : sakasistem.com</sub></i>
 			</span>
 			";
-			
+			// debug
+			// echo $message;
+			// die();
 			  
 			if ($this->validation() == TRUE){
 				// echo "VALID";
@@ -114,6 +128,7 @@ class Email extends CI_Controller {
 				
 				// save to db
 				// TODO: handle unique data only
+				// $this->datadb->
 				$this->datadb->insert($this->table_name,$data);
 				
 				// setup mail data
