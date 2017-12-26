@@ -32,7 +32,8 @@ class Pengguna_m extends MY_Model
 		$record->email = '';
 		$record->telpon = '';
 		$record->level = '';
-		$record->active = '';
+        $record->active = '';
+		$record->gambar = '';
         return $record;
     }
 	

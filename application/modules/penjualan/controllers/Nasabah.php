@@ -43,6 +43,13 @@ class Nasabah extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
+	public function kavlingjson($id)
+	{
+		
+		echo json_encode($this->data->get_kav($id));
+		
+	}
+
 	public function updated($id=null)
 	{
 		$data['head'] 		= 'Ubah Data Nasabah';
@@ -100,6 +107,7 @@ class Nasabah extends CI_Controller {
 	
 	public function ajax_save()
     {
+
         $data = array(
 			'ktp' => $this->input->post('ktp'),
 			'nama' => $this->input->post('nama'),
@@ -114,7 +122,6 @@ class Nasabah extends CI_Controller {
 			'telpon1' => $this->input->post('telpon1'),
 			'telpon2' => $this->input->post('telpon2'),
 			'wa' => $this->input->post('wa'),
-			'bbm' => $this->input->post('bbm'),
 			'email' => $this->input->post('email'),
 			'pekerjaan' => $this->input->post('pekerjaan'),
 			'instansi' => $this->input->post('instansi'),
@@ -162,7 +169,6 @@ class Nasabah extends CI_Controller {
 			'telpon1' => $this->input->post('telpon1'),
 			'telpon2' => $this->input->post('telpon2'),
 			'wa' => $this->input->post('wa'),
-			'bbm' => $this->input->post('bbm'),
 			'email' => $this->input->post('email'),
 			'pekerjaan' => $this->input->post('pekerjaan'),
 			'instansi' => $this->input->post('instansi'),
@@ -227,7 +233,6 @@ class Nasabah extends CI_Controller {
 		$this->form_validation->set_rules("telpon1", "Nomor Telepon 1", "trim|required");
 		$this->form_validation->set_rules("telpon2", "Nomor Telepon 2", "trim|required");
 		$this->form_validation->set_rules("wa", "WhatsApp", "trim|required");
-		$this->form_validation->set_rules("bbm", "BBM", "trim|required");
 		$this->form_validation->set_rules("email", "Email", "trim|required|valid_email");
 		$this->form_validation->set_rules("pekerjaan", "Pekerjaan", "trim|required");
 		$this->form_validation->set_rules("instansi", "Instansi", "trim|required");
@@ -251,6 +256,25 @@ class Nasabah extends CI_Controller {
         echo json_encode($data);
         return $this->form_validation->run();
     }
+
+    public function json_search_follow()
+	{
+		$query  = $this->data->get_follow();
+        $data = array();
+        foreach ($query as $key => $value) 
+        {
+            $data[] = array(
+            	'id' => $value->id, 
+            	'name' => $value->nama, 
+            	'ktp' => $value->ktp,
+            	'email' => $value->email,
+            	'telpon' => $value->telpon,
+            	'alamat' => $value->alamat,
+            	'pekerjaan' => $value->pekerjaan
+            );
+        }
+        echo json_encode($data);
+	}
 
    
    

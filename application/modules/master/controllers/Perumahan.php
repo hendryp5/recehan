@@ -75,8 +75,8 @@ class Perumahan extends CI_Controller {
 	public function ajax_save()
     {
         $data = array(
-			'perumahan' => $this->input->post('perumahan'),
-			'lokasi' => $this->input->post('lokasi'),
+			'perumahan' => $this->input->post('perumahan', TRUE),
+			'lokasi' => $this->input->post('lokasi', TRUE),
 			'gambar' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code')
 		);
@@ -90,8 +90,8 @@ class Perumahan extends CI_Controller {
     public function ajax_update($id)
     {
         $data = array(
-			'perumahan' => $this->input->post('perumahan'),
-			'lokasi' => $this->input->post('lokasi'),
+			'perumahan' => $this->input->post('perumahan', TRUE),
+			'lokasi' => $this->input->post('lokasi', TRUE),
 			'gambar' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code')
 		);

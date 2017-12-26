@@ -46,6 +46,16 @@
                             ?>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('nama') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('ATAS NAMA','nama');
+                            $data = array('class'=>'form-control','name'=>'nama','id'=>'nama','type'=>'text','value'=>set_value('nama', $record->nama));
+                            echo form_input($data);
+                            echo form_error('nama') ? form_error('nama', '<p class="help-block">','</p>') : '';
+                            ?>
+                        </div>
+                    </div>
                 </div>        
             </div>
             <!-- /. row body -->

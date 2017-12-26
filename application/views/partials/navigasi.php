@@ -4,7 +4,12 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
+          <?php if ($this->session->userdata('gambar') == NULL) { ?>
           <img src="<?= base_url('asset/dist/img/avatar5.png'); ?>" class="img-circle" alt="User Image">
+          
+          <?php } else{ ?>
+          <img src="<?= $this->session->userdata('gambar'); ?>" class="img-circle" alt="User Image">
+          <?php } ?>
         </div>
         <div class="pull-left info">
           <p><?= $this->session->userdata('username'); ?></p>
@@ -44,9 +49,10 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?= site_url('penjualan/daftarharga'); ?>"><i class="fa fa-circle-o"></i> Daftar Harga</a></li>
+              <li><a href="<?= site_url('penjualan/daftarkavling'); ?>"><i class="fa fa-circle-o"></i> Daftar Kavling</a></li>
+              <li><a href="<?= site_url('penjualan/followup'); ?>"><i class="fa fa-circle-o"></i> Data Followup</a></li>
               <li><a href="<?= site_url('penjualan/nasabah'); ?>"><i class="fa fa-circle-o"></i> Nasabah</a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i> Pesan Unit</a></li>
+              <li><a href="<?= site_url('penjualan/pesanunit'); ?>"><i class="fa fa-circle-o"></i> Pesan Unit</a></li>
               <li><a href="#"><i class="fa fa-circle-o"></i> Akad Jual Beli</a></li>
               <li><a href="#"><i class="fa fa-circle-o"></i> Kartu Kontrol Transaksi</a></li>
             </ul>
@@ -86,6 +92,7 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
+                      <li><a href="<?= site_url('pengaturan/kategorirab'); ?>"><i class="fa fa-circle-o"></i>Kategori RAB</a></li>
                       <li><a href="#"><i class="fa fa-circle-o"></i> Pengaturan Pengguna </a></li>
                       <li><a href="#"><i class="fa fa-circle-o"></i> Berita dan Informasi </a></li>
                       <li><a href="#"><i class="fa fa-circle-o"></i> Backup Database </a></li>

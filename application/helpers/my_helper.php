@@ -546,3 +546,123 @@ if ( ! function_exists('status_penjualan'))
 		}
 	}
 }
+
+//melalui
+if ( ! function_exists('melalui'))
+{
+	function melalui($value)
+	{
+		if($value == '1')
+		{
+			return 'TELEPON';
+		}
+		else if ($value == '2')
+		{
+			return 'BERTEMU';
+		}
+		else if ($value == '3')
+		{
+			return 'KEKANTOR';
+		}
+		else if ($value == '4')
+		{
+			return 'KELOKASI';
+		}
+		else if ($value == '5')
+		{
+			return 'CLOSING/PESAN UNIT';
+		}
+		else
+		{
+			return "-";
+		}
+	}
+}
+
+if ( ! function_exists('perumahan'))
+{
+	function perumahan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('master_perumahan');
+		if ($query->num_rows() > 0) {
+			return $query->row()->perumahan;
+		} else {
+			return '-';
+		}
+	}
+}
+
+if ( ! function_exists('total_unit'))
+{
+	function total_unit($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('type',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_tersedia'))
+{
+	function total_tersedia($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('type',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 1);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_terjual'))
+{
+	function total_terjual($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('type',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 2);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_terpesan'))
+{
+	function total_terpesan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('type',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 3);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+

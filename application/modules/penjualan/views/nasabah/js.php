@@ -1,21 +1,20 @@
 <script type="text/javascript">
-    $("#kavling_id").change(function(){
-        var kavling_id = $("#kavling_id").val();
-        $.ajax({
-            type: "POST",
-            url : "<?php echo base_url('penjualan/nasabah/get_detail_kavling'); ?>",
-            data: "kavling_id="+kavling_id,
-            cache:false,
-            success: function(data){
-               var json = data,
-                    obj = JSON.parse(json);
-                    $('#type').val(obj.type);
-                    $('#tanah').val(obj.tanah);
-                    $('#bangunan').val(obj.bangunan);
-            }
-        });
-    });
+    $('#kavling_id').attr('onchange','get_kav(value)');
+    function get_kav(id){
+        // console.log('id',id);
+        if(!id) {
+            $('#tanah').val('');
+            $('#bangunan').val('');
+            $('#harga').val('');
+        }
+        $.getJSON('<?= base_url('penjualan/nasabah/kavlingjson/') ?>'+id).then(function(data){
 
+            // alert(data);
+            $('#tanah').val(data.tanah);
+            $('#bangunan').val(data.bangunan);
+            $('#harga').val(data.harga);
+        });
+    }
 </script>
 
 <script type="text/javascript">
@@ -35,7 +34,7 @@
 					console.log('Second change event...');
 				});
 				
-				$('#pendapatan').number( true, 2 );
+				$('#pendapatan').number( true );
 				
 				
 				// Get the value of the number for the demo.
@@ -65,7 +64,7 @@
                     console.log('Second change event...');
                 });
                 
-                $('#angsuran').number( true, 2 );
+                $('#angsuran').number( true );
                 
                 
                 // Get the value of the number for the demo.
@@ -95,13 +94,43 @@
                     console.log('Second change event...');
                 });
                 
-                $('#pendapatan_pasangan').number( true, 2 );
+                $('#pendapatan_pasangan').number( true );
                 
                 
                 // Get the value of the number for the demo.
                 $('#get_number').on('click',function(){
                     
                     var val = $('#pendapatan_pasangan').val();
+                    
+                    $('#the_number').text( val !== '' ? val : '(empty)' );
+                });
+            });
+</script>
+
+<script type="text/javascript">
+            
+            $(function(){
+                // Set up the number formatting.
+                
+                $('#number_container').slideDown('fast');
+                
+                $('#harga').on('change',function(){
+                    console.log('Change event.');
+                    var val = $('#harga').val();
+                    $('#the_number').text( val !== '' ? val : '(empty)' );
+                });
+                
+                $('#harga').change(function(){
+                    console.log('Second change event...');
+                });
+                
+                $('#harga').number( true );
+                
+                
+                // Get the value of the number for the demo.
+                $('#get_number').on('click',function(){
+                    
+                    var val = $('#harga').val();
                     
                     $('#the_number').text( val !== '' ? val : '(empty)' );
                 });
@@ -164,6 +193,39 @@
             
            
         });   
-    </script>  
+</script>  
+<script>
+     $(document).ready(function(e){
+        var site_url = "<?php echo site_url(); ?>";
+        var input = $("input[name=nama]");
+
+            $.get(site_url+'penjualan/nasabah/json_search_follow', function(data){
+                        input.typeahead({
+                            source: data,
+                            minLength: 1,
+                        });
+            }, 'json');
+
+            input.change(function(){
+                var current = input.typeahead("getActive");
+                $('#id').val(current.id);
+        $('#ktp').val(current.ktp);
+        $('#email').val(current.email);
+        $('#telpon').val(current.telpon);
+        $('#alamat').val(current.alamat);
+        $('#pekerjaan').val(current.pekerjaan);
+
+            });
+
+    });
+</script>
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#tglahir').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose:true
+                });
+            });
+</script>
 
 

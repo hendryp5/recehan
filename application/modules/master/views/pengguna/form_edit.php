@@ -75,6 +75,18 @@
 							?>
 						</div>
 					</div>
+					 <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('gambar') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('GAMBAR','gambar');
+                            echo ' <div class="input-group input-group">';
+                            $data = array('class'=>'form-control','name'=>'gambar','id'=>'gambar','type'=>'text','value'=>set_value('gambar', $record->gambar));
+                            echo form_input($data);
+                            echo '<span class="input-group-btn"><a data-toggle="modal"  href="javascript;" data-target="#modal-gambar" class="btn btn-info btn-flat" type="button">Pilih Gambar</a></span>';
+                            echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
+                            ?>
+                        </div>
+                    </div>
 					
 				</div>
 			</div>
@@ -89,3 +101,26 @@
 		</div>
 	</div>
 </div>
+<style type="text/css">
+@media screen and (min-width: 460px) {
+  #modal-gambar .modal-dialog  {width:940px;}
+  #modal-tautan .modal-dialog  {width:940px;}
+}
+</style>
+<div class="file-modal">
+  <div class="modal fade" id="modal-gambar">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Pilih Gambar Perumahan</h4>
+        </div>
+        <div class="modal-body">
+                    <div class="frame">
+          <iframe height="500" src="<?php echo base_url('filemanager/dialog.php?type=1&field_id=gambar&relative_url=3'); ?>" frameborder="0" style="overflow: scroll !important; overflow-x: hidden; overflow-y: scroll auto; min-width: 460px; width: 910px; "></iframe>
+                    </div>
+                </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</div><!-- /.example-modal -->

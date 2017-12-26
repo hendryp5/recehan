@@ -9,7 +9,8 @@
   <link rel="stylesheet" href= "<?= base_url('asset/plugins/font-awesome/css/font-awesome.min.css');?>" >
   <link rel="stylesheet" href= "<?= base_url('asset/plugins/Ionicons/css/ionicons.min.css'); ?>" >
   <link rel="stylesheet" href= "<?= base_url('asset/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css'); ?>" >
-	<link rel="stylesheet" href= "<?= base_url('asset/plugins/datatables.net-bs/css/dataTables.responsive.css'); ?>" >
+  <link rel="stylesheet" href= "<?= base_url('asset/plugins/datatables.net-bs/css/dataTables.responsive.css'); ?>" >
+	<link rel="stylesheet" href= "<?= base_url('asset/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'); ?>" >
   <link rel="stylesheet" href= "<?= base_url('asset/dist/css/AdminLTE.min.css'); ?>" >
   <link rel="stylesheet" href= "<?= base_url('asset/dist/css/smart_wizard.css'); ?>" >
   <link rel="stylesheet" href= "<?= base_url('asset/dist/css/smart_wizard_theme_arrows.css'); ?>" >
@@ -71,6 +72,8 @@
 <script src="<?= base_url('asset/plugins/jquery/dist/jquery.min.js'); ?>"></script>
 <script src="<?= base_url('asset/plugins/jquery/dist/jquery.number.js'); ?>"></script>
 <script src="<?= base_url('asset/plugins/jquery/dist/jquery.number.min.js'); ?>"></script>
+<script src="<?= base_url('asset/plugins/jquery/dist/bootstrap3-typeahead.js'); ?>"></script>
+<script src="<?= base_url('asset/plugins/jquery/dist/bootstrap3-typeahead.min.js'); ?>"></script>
 <script src="<?= base_url('asset/dist/js/jquery.smartWizard.min.js'); ?>"></script>
 <script src="<?= base_url('asset/plugins/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
 <script src="<?= base_url('asset/plugins/datatables.net/js/jquery.dataTables.min.js'); ?>"></script>
@@ -79,6 +82,9 @@
 <script src="<?= base_url('asset/plugins/datatables.net-bs/js/dataTables.responsive.js'); ?>"></script> 
 <script src="<?= base_url('asset/plugins/datatables.net-bs/js/dataTables.bootstrap.js'); ?>"></script> 
 <script src="<?= base_url('asset/plugins/jquery-slimscroll/jquery.slimscroll.min.js'); ?>"> </script>
+<script src="<?= base_url('asset/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'); ?>"></script>
+<script src="<?= base_url('asset/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'); ?>"></script>
+<script src="<?= base_url('asset/plugins/fastclick/lib/fastclick.js'); ?>"></script>
 <script src="<?= base_url('asset/plugins/fastclick/lib/fastclick.js'); ?>"></script>
 <script src="<?= base_url('asset/dist/js/adminlte.min.js'); ?>"> </script>
 <script src="<?= base_url('asset/js/app.js'); ?>"> </script>

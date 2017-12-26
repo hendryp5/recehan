@@ -24,6 +24,7 @@
                             <th>KODE</th>
                             <th>BANK</th>
                             <th>REKENING</th>
+                            <th>ATAS NAMA</th>
                             <th width="30px"></th>
                         </tr>
                     </thead>

@@ -12,27 +12,75 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="box-body">
-                <a class="btn btn-sm btn-flat btn-success" onclick="add_data();" href="<?= site_url('master/bank/created'); ?>"><i class="glyphicon glyphicon-plus"></i> Tambah Data</a>
-                <button class="btn btn-sm btn-flat btn-danger" onclick="deleted_all();"><i class="glyphicon glyphicon-trash"></i> Hapus</button>
-                <button class="btn btn-sm btn-flat btn-default" data-toggle="tooltip" title="Reload Data" data-placement="right" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i></button>
-                <span id="key" style="display: none;"><?= $this->security->get_csrf_hash(); ?></span>
-                <table id="tableID" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th width="5px"><input type="checkbox" id="check-all"></th>
-                            <th>KODE</th>
-                            <th>BANK</th>
-                            <th>REKENING</th>
-                            <th width="30px"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>           
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="<?php echo $record->logo; ?>" alt="User profile picture">
+
+
+              <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('perusahaan') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('NAMA PERUSAHAAN','perusahaan');
+                            $data = array('disabled class'=>'form-control','name'=>'perusahaan','id'=>'perusahaan','type'=>'text','value'=>set_value('perusahaan', $record->perusahaan));
+                            echo form_input($data);
+                             ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('alamat') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('ALAMAT LENGKAP','alamat');
+                            $data = array('disabled class'=>'form-control','name'=>'alamat','id'=>'alamat','type'=>'text','value'=>set_value('alamat', $record->alamat));
+                            echo form_input($data);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('telpon') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('TELPON','telpon');
+                            $data = array('disabled class'=>'form-control','name'=>'telpon','id'=>'telpon','type'=>'text','value'=>set_value('telpon', $record->telpon));
+                            echo form_input($data);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('fax') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('FAX','fax');
+                            $data = array('disabled class'=>'form-control','name'=>'fax','id'=>'fax','type'=>'text','value'=>set_value('fax', $record->fax));
+                            echo form_input($data);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('email') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('EMAIL','email');
+                            $data = array('disabled class'=>'form-control','name'=>'email','id'=>'telpon','type'=>'email','value'=>set_value('email', $record->email));
+                            echo form_input($data);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group <?php echo form_error('website') ? 'has-error' : null; ?>">
+                            <?php
+                            echo form_label('WEBSITE','website');
+                            $data = array('disabled class'=>'form-control','name'=>'website','id'=>'website','type'=>'text','value'=>set_value('website', $record->website));
+                            echo form_input($data);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group <?php echo form_error('logo') ? 'has-error' : null; ?>">
+                            <?php
+                            echo ' <div class="input-group input-group">';
+                            ?>
+                        </div>
+                    </div>
+              <a class="btn btn-flat btn-warning" onclick="edit_data();" href="<?php echo site_url('master/perusahaan/updated/'.+$record->id) ?>"  title="Edit">EDIT<i class="glyphicon glyphicon-pencil"></i></a>
             </div>
-            <!-- /.col-lg-12 -->
-        </div>
+            <!-- /.box-body -->
+          </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->

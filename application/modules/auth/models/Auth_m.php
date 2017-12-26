@@ -29,4 +29,9 @@ class Auth_m extends MY_Model
 	{
 		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('code');
 	}
+
+	public function get_gambar($email)
+	{
+		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('gambar');
+	}
 }

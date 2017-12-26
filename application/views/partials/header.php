@@ -25,14 +25,21 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <?php if ($this->session->userdata('gambar') == NULL) { ?>
               <img src="<?= base_url('asset/dist/img/avatar5.png'); ?>" class="user-image" alt="User Image">
+              <?php } else { ?>
+              <img src="<?= $this->session->userdata('gambar'); ?>" class="user-image" alt="User Image">
+              <?php } ?>
               <span class="hidden-xs">&nbsp;</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
+                <?php if ($this->session->userdata('gambar') == NULL) { ?>
                 <img src="<?= base_url('asset/dist/img/avatar5.png'); ?>" class="img-circle" alt="User Image">
-
+                <?php } else { ?>
+                <img src="<?= $this->session->userdata('gambar'); ?>" class="img-circle" alt="User Image">
+                <?php } ?>
                 <p>
                   <?= $this->session->userdata('username'); ?> <br>
                   <small>&nbsp;</small>

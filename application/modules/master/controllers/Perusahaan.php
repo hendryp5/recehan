@@ -20,17 +20,17 @@ class Perusahaan extends CI_Controller {
 		$code = $this->session->userdata('code');
 		$find = $this->data->get_perusahaan($code);
 		if($find){
-			redirect('master/perusahaan/updated/'.$find->id);
+			$data['head'] 		= 'Profil Perusahaan';
+			$data['record'] 	= $this->data->get_id($find->id);
+			$data['content'] 	= $this->folder.'default';
+			$data['style'] 		= $this->folder.'style';
+			$data['js'] 		= $this->folder.'js';
+			$this->load->view('template', $data);	
 		}else{
 			redirect('master/perusahaan/created');
 		}
 		
-		$data['head'] 		= 'Profil Perusahaan';
-		$data['record'] 	= $this->data->get_all();
-		$data['content'] 	= $this->folder.'default';
-		$data['style'] 		= $this->folder.'style';
-		$data['js'] 		= $this->folder.'js';
-		$this->load->view('template', $data);
+		
 	}
 
 	public function created()

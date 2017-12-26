@@ -58,6 +58,7 @@ class Bank extends CI_Controller {
 			$col[] = $row->kode;
 			$col[] = $row->bank;
             $col[] = $row->rekening;
+            $col[] = $row->nama;
 			$col[] = '<a class="btn btn-xs btn-flat btn-warning" onclick="edit_data();" href="'.site_url('master/bank/updated/'.$row->id).'" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                   <a class="btn btn-xs btn-flat btn-danger" data-toggle="tooltip" title="Hapus" onclick="deleted('."'".$row->id."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
             $data[] = $col;
@@ -78,6 +79,7 @@ class Bank extends CI_Controller {
 			'kode' => $this->input->post('kode', TRUE),
 			'bank' => $this->input->post('bank', TRUE),
 			'rekening' => $this->input->post('rekening', TRUE),
+			'nama' => $this->input->post('nama', TRUE),
 			'code' => $this->session->userdata('code')
 		);
         
@@ -93,6 +95,7 @@ class Bank extends CI_Controller {
 			'kode' => $this->input->post('kode', TRUE),
 			'bank' => $this->input->post('bank', TRUE),
 			'rekening' => $this->input->post('rekening', TRUE),
+			'nama' => $this->input->post('nama', TRUE),
 			'code' => $this->session->userdata('code')
 		);
 

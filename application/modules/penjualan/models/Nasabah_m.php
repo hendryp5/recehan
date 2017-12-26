@@ -37,7 +37,6 @@ class Nasabah_m extends MY_Model
         $record->telpon1 = '';
         $record->telpon2 = '';
         $record->wa = '';
-        $record->bbm = '';
         $record->email = '';
         $record->pekerjaan = '';
         $record->instansi = '';
@@ -201,7 +200,7 @@ class Nasabah_m extends MY_Model
 
         $this->db->where('deleted_at', NULL);
         $query = $this->db->order_by('id', 'ASC')->get('kavling');
-        $jsArray = 'var model = new Array();\n'; 
+        
         if($query->num_rows() > 0){
         $dropdown[''] = 'Pilih Kavling';
         foreach ($query->result() as $row)
@@ -209,11 +208,28 @@ class Nasabah_m extends MY_Model
             $dropdown[$row->id] = $row->kavling;
         }
         }else{
-            $dropdown[''] = 'Kavling Belum Ada'; 
+            $dropdown[''] = 'Kavling Belum Ada';
+           
         }
         return $dropdown;
     }
     
+
+    public function get_group_kav_json()
+    {
+
+        $hasil = $this->get_kav();
+        $hasiljson = json_encode($hasil);
+        return $hasiljson;
+    }
+
+    public function get_kav($id)
+    {
+        $this->db->where('id',$id);
+        $query = $this->db->get('kavling');
+        return $query->row();
+    }
+
     //dropdown pekerjaaan
     public function get_group_pkj()
     {
@@ -223,6 +239,7 @@ class Nasabah_m extends MY_Model
         $dropdown[''] = 'Pilih Pekerjaan';
         foreach ($query->result() as $row)
         {
+
             $dropdown[$row->id] = $row->pekerjaan;
         }
         }else{
@@ -231,10 +248,12 @@ class Nasabah_m extends MY_Model
         return $dropdown;
     }
 
-    public function getdatabyid($id){
-        $this->db->where('id',$id);
-        // $query = $this->db->get('serahterimabb');
-        $query = $this->db->get('kavling');
+    function get_follow()
+    {
+        $this->db->where('deleted_at', NULL);
+        $query = $this->db->get('followup');
         return $query->result();
     }
+
+  
 }

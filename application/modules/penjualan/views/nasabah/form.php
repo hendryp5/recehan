@@ -58,7 +58,7 @@
                             <div class="form-group <?php echo form_error('tglahir') ? 'has-error' : null; ?>">
                                 <?php
                                 echo form_label('TANGGAL LAHIR','tglahir');
-                                $data = array('class'=>'form-control','name'=>'tglahir','id'=>'tglahir','type'=>'date','value'=>set_value('tglahir', $record->tglahir));
+                                $data = array('class'=>'form-control','name'=>'tglahir','id'=>'tglahir','type'=>'text','value'=>set_value('tglahir', $record->tglahir));
                                 echo form_input($data);
                                 echo form_error('tglahir') ? form_error('tglahir', '<p class="help-block">','</p>') : '';
                                 ?>
@@ -159,16 +159,6 @@
                                 $data = array('class'=>'form-control','name'=>'wa','id'=>'wa','type'=>'text','placeholder'=>'Masukkan Nomor WHATSAPP / Contoh : 0812xxxxxxx','value'=>set_value('wa', $record->wa));
                                 echo form_input($data);
                                 echo form_error('wa') ? form_error('wa', '<p class="help-block">','</p>') : '';
-                                ?>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group <?php echo form_error('bbm') ? 'has-error' : null; ?>">
-                                <?php
-                                echo form_label('BBM','bbm');
-                                $data = array('class'=>'form-control','name'=>'bbm','id'=>'bbm','type'=>'text','placeholder'=>'Masukkan PIN BBM / Contoh : B126DF7G','value'=>set_value('bbm', $record->bbm));
-                                echo form_input($data);
-                                echo form_error('bbm') ? form_error('bbm', '<p class="help-block">','</p>') : '';
                                 ?>
                             </div>
                         </div>
@@ -379,14 +369,6 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                        <div class="box-footer">
-                                <button type="button" class="btn btn-sm btn-flat btn-success" onclick="save()"><i class="fa fa-save"></i> Simpan</button>
-                                <button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveout();"><i class="fa fa-save"></i> Simpan & Keluar</button>
-                                <button type="reset" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-refresh"></i> Reset</button>
-                                <button type="button" class="btn btn-sm btn-flat btn-danger" onclick="back();"><i class="fa fa-close"></i> Keluar</button>
-                        </div>
-                    </div>
                     </div>
                 </div>
 
@@ -397,7 +379,7 @@
                                 <?php 
                                 echo form_label('PERUMAHAN','perumahan_id');
                                 $selected = set_value('perumahan_id', $record->perumahan_id);
-                                echo form_dropdown('perumahan_id', $group, $selected, "class='form-control select2' name='perumahan_id' id='perumahan_id'");
+                                echo form_dropdown('perumahan_id', $group, $selected, "class='form-control select2' name='perumahan_id' id='perumahan_id' ");
                                 echo form_error('perumahan_id') ? form_error('perumahan_id', '<p class="help-block">','</p>') : '';
                                 ?>
                             </div>
@@ -406,13 +388,10 @@
 
                                 echo form_label('NOMOR KAVLING','kavling_id');
                                 $selected = set_value('kavling_id', $record->kavling_id);
-                                echo form_dropdown('kavling_id', $group_kav, $selected, "class='form-control select2' name='kavling_id' id='kavling_id'");
+                                echo form_dropdown('kavling_id', $group_kav, $selected, "class='form-control select2' name='kavling_id' id='kavling_id' ");
                                 echo form_error('kavling_id') ? form_error('kavling_id', '<p class="help-block">','</p>') : '';
                                 ?>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="tanah" id="tanah">
-                            </div>
+                            </div>  
                             <div class="form-group">
                                 <?php
                                 echo form_label('LUAS TANAH','tanah');
@@ -435,12 +414,16 @@
                                 ?>
                             </div>
                         </div> 
-                             
-                        </div>  
-                    </div> 
-                </div>
-
-
+                    </div>  
+                </div> 
+            </div>
+        </div>
+            <div class="box-footer">
+                    <button type="button" class="btn btn-sm btn-flat btn-success" onclick="save()"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveout();"><i class="fa fa-save"></i> Simpan & Keluar</button>
+                    <button type="reset" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+                    <button type="button" class="btn btn-sm btn-flat btn-danger" onclick="back();"><i class="fa fa-close"></i> Keluar</button>
+            </div>
         </div>
         <!-- /.row -->
     </div>

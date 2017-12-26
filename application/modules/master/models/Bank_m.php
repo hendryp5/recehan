@@ -9,8 +9,8 @@ class Bank_m extends MY_Model
 	public $protected = array(); // ...Or you can set an array with the fields that cannot be filled by insert/update
 	
 	//ajax datatable
-    public $column_order = array('id','kode','rekening','bank',null); //set kolom field database pada datatable secara berurutan
-    public $column_search = array('kode','rekening','bank'); //set kolom field database pada datatable untuk pencarian
+    public $column_order = array('id','kode','rekening','bank','nama',null); //set kolom field database pada datatable secara berurutan
+    public $column_search = array('kode','rekening','bank','nama'); //set kolom field database pada datatable untuk pencarian
     public $order = array('id' => 'asc'); //order baku 
 	
 	public function __construct()
@@ -27,6 +27,7 @@ class Bank_m extends MY_Model
         $record->kode = '';
         $record->bank = '';
         $record->rekening = '';
+        $record->nama = '';
         return $record;
     }
 	

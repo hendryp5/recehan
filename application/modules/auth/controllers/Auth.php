@@ -47,6 +47,7 @@ class Auth extends CI_Controller {
 				$ip_address = $this->input->ip_address();
 				$level = $this->_get_level($email_post);
 				$code = $this->_get_code($email_post);
+				$gambar = $this->_get_gambar($email_post);
 				
 				$create_session = array(
 					'userID'=> $user_ID,
@@ -55,6 +56,7 @@ class Auth extends CI_Controller {
 					'signin' => TRUE,
 					'level' => $level,
 					'code'=> $code,
+					'gambar'=> $gambar,
 				);
 				
 				$this->session->set_userdata($create_session);
@@ -95,6 +97,11 @@ class Auth extends CI_Controller {
 		$code = $this->data->get_code($email_post);
 		return $code;
 	}
+
+	private function _get_gambar($email_post){
+		$gambar = $this->data->get_gambar($email_post);
+		return $gambar;
+	}
 	
 	private function _verify_password_hash($pass_post, $hash)
 	{
@@ -108,6 +115,7 @@ class Auth extends CI_Controller {
 		$this->session->unset_userdata('sigin');
 		$this->session->unset_userdata('level');
 		$this->session->unset_userdata('code');
+		$this->session->unset_userdata('gambar');
 		$this->session->sess_destroy();
 		//helper_log("logout", "Logout Pada Sistem");
 		redirect('login');

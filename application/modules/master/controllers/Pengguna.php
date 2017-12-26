@@ -92,13 +92,14 @@ class Pengguna extends CI_Controller {
 	public function ajax_save()
     {
         $data = array(
-				'username' => $this->input->post('username'),
-				'fullname' => $this->input->post('fullname'),
-				'email' => $this->input->post('email'),
-				'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-				'telpon' => $this->input->post('telpon'),
-				'level' => $this->input->post('level'),
-				'active' => $this->input->post('active'),
+				'username' => $this->input->post('username', TRUE),
+				'fullname' => $this->input->post('fullname', TRUE),
+				'email' => $this->input->post('email', TRUE),
+				'password' => password_hash($this->input->post('password', TRUE), PASSWORD_BCRYPT),
+				'telpon' => $this->input->post('telpon', TRUE),
+				'level' => $this->input->post('level', TRUE),
+				'active' => $this->input->post('active', TRUE),
+				'gambar' => $this->input->post('gambar'),
 				'code' => $this->session->userdata('code')
         );
         
@@ -111,12 +112,13 @@ class Pengguna extends CI_Controller {
     public function ajax_update($id)
     {
         $data = array(
-			'username' => $this->input->post('username'),
-			'fullname' => $this->input->post('fullname'),
-			'email' => $this->input->post('email'),
-			'telpon' => $this->input->post('telpon'),
-			'level' => $this->input->post('level'),
-			'active' => $this->input->post('active'),
+			'username' => $this->input->post('username', TRUE),
+			'fullname' => $this->input->post('fullname', TRUE),
+			'email' => $this->input->post('email', TRUE),
+			'telpon' => $this->input->post('telpon', TRUE),
+			'level' => $this->input->post('level', TRUE),
+			'active' => $this->input->post('active', TRUE),
+			'gambar' => $this->input->post('gambar', TRUE),
 			'code' => $this->session->userdata('code')
 		);
 		
