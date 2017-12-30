@@ -39,12 +39,13 @@
                     <div class="col-md-12">
                         <div class="form-group <?php echo form_error('gambar') ? 'has-error' : null; ?>">
                             <?php
-                            echo form_label('GAMBAR','gambar');
-                            echo ' <div class="input-group input-group">';
-                            $data = array('class'=>'form-control','name'=>'gambar','id'=>'gambar','type'=>'text','value'=>set_value('gambar', $record->gambar));
-                            echo form_input($data);
-                            echo '<span class="input-group-btn"><a data-toggle="modal"  href="javascript;" data-target="#modal-gambar" class="btn btn-info btn-flat" type="button">Pilih Gambar</a></span>';
-                            echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
+                            $this->load->view('upload_view');
+                            // echo form_label('GAMBAR','gambar');
+                            // echo ' <div class="input-group input-group">';
+                            // $data = array('class'=>'form-control','name'=>'gambar','id'=>'gambar','type'=>'text','value'=>set_value('gambar', $record->gambar));
+                            // echo form_input($data);
+                            // echo '<span class="input-group-btn"><a data-toggle="modal"  href="javascript;" data-target="#modal-gambar" class="btn btn-info btn-flat" type="button">Pilih Gambar</a></span>';
+                            // echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
                             ?>
                         </div>
                     </div>
