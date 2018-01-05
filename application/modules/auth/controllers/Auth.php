@@ -18,7 +18,15 @@ class Auth extends CI_Controller {
 	public function index()
 	{
 		//echo password_hash('admin', PASSWORD_BCRYPT);
+		// $ck = new S3('521ee9cfe9a63237681e','iH9o9sfTxbE2ZsgbS5sGPCapMDtS8la4HoXPQgBi','cdn.julak.id');
+		// $bucket_name = 'cdn.julak.id';
+		// var_dump($ck->listBuckets());
+		// var_dump($ck->putObject('Huruf yang panjang', $bucket_name, 'cdn.julak.id.kilatstorage.com/index', S3::ACL_PUBLIC_READ));
+		// var_dump($ck->myGetBucket($bucket_name)); // thumb 200x200
+		// $myBucket = $ck->myGetBucket($bucket_name);//$ck->putObjectFile('/data/app/dev/git/saka/recehan/asset/dist/img/avatar.png', $bucket_name, "/"."ugitestfile.png", S3::ACL_PUBLIC_READ, $metaHeaders = array(), $contentType = null);//$ck->getObjectInfo($bucket_name);//$ck->myGetBucket($bucket_name);
 		
+		// die("<script> console.log(JSON.parse('".json_encode($myBucket)."'));</script>");
+		// var_dump($ck->getObjectInfo($bucket_name),'index');
 		$data['title'] 		= 'SIGN IN';
 		$data['record'] 	= $this->data->get_all();
 		$data['content'] 	= $this->folder.'default';

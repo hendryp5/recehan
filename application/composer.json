@@ -1,0 +1,5 @@
+{
+    "require": {
+        "r3k4/ck-storage": "^0.6.1"
+    }
+}

@@ -1,0 +1,45 @@
+[
+    {
+        "name": "r3k4/ck-storage",
+        "version": "v0.6.1",
+        "version_normalized": "0.6.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/r3k4/ck-storage.git",
+            "reference": "70938694c8ed36e9f4ccc2617cbb4e494013097c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/r3k4/ck-storage/zipball/70938694c8ed36e9f4ccc2617cbb4e494013097c",
+            "reference": "70938694c8ed36e9f4ccc2617cbb4e494013097c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "time": "2017-01-20T20:04:39+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Reka\\": "src/S3"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Reka Prihatanto",
+                "email": "rey.barrolz@gmail.com"
+            }
+        ],
+        "description": "A simple cloudkilat storage s3 class for laravel ",
+        "keywords": [
+            "AWS S3",
+            "cloudkilat",
+            "s3"
+        ]
+    }
+]

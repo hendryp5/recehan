@@ -11,7 +11,7 @@
 <!-- Page Content -->
 <div id="page-wrapper">
     <form id="formID" role="form" action="" method="post">
-	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
+	<input id="cstok" type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 	<div class="container-fluid">
         <div class="row">
             <div class="box-body">
@@ -39,13 +39,21 @@
                     <div class="col-md-12">
                         <div class="form-group <?php echo form_error('gambar') ? 'has-error' : null; ?>">
                             <?php
-                            $this->load->view('upload_view');
-                            // echo form_label('GAMBAR','gambar');
-                            // echo ' <div class="input-group input-group">';
-                            // $data = array('class'=>'form-control','name'=>'gambar','id'=>'gambar','type'=>'text','value'=>set_value('gambar', $record->gambar));
-                            // echo form_input($data);
-                            // echo '<span class="input-group-btn"><a data-toggle="modal"  href="javascript;" data-target="#modal-gambar" class="btn btn-info btn-flat" type="button">Pilih Gambar</a></span>';
-                            // echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
+                            // label
+                            echo form_label('GAMBAR','gambar');
+                            // grup
+                            echo ' <div class="input-group input-group">';
+                            // gambar preview
+                            echo '<img id="gambar" style="max-height:200px;" src="'.set_value('gambar', $record->gambar).'"/>';
+                            // tombol upload
+                            $data = array('class'=>'form-control','id'=>'file','type'=>'file','value'=>'');
+                            echo form_input($data);
+                            // real value (URL) yang akan disave (hidden)
+                            $data = array('class'=>'form-control','id'=>'url-gambar','name'=>'gambar','type'=>'hidden','value'=>set_value('gambar', $record->gambar));
+                            echo form_input($data);
+                            // loading element
+                            echo '<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>'; 
+                            echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
                             ?>
                         </div>
                     </div>
