@@ -11,12 +11,17 @@ class Bank extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('bank_m', 'data');
-		//signin();
+		signin();
 	}
 	
 	public function index()
 	{
-		$data['head'] 		= 'Master Bank';
+		if(!group(array('1','2'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
+		$data['head'] 		= 'Daftar Rekening Bank';
 		$data['record'] 	= $this->data->get_all();
 		$data['content'] 	= $this->folder.'default';
 		$data['style'] 		= $this->folder.'style';
@@ -26,7 +31,12 @@ class Bank extends CI_Controller {
 
 	public function created()
 	{
-		$data['head'] 		= 'Tambah Master Bank';
+		if(!group(array('1','2'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
+		$data['head'] 		= 'Tambah Rekening Bank';
 		$data['record'] 	= $this->data->get_new();
 		$data['content'] 	= $this->folder.'form';
 		$data['style'] 		= $this->folder.'style';
@@ -36,7 +46,12 @@ class Bank extends CI_Controller {
 
 	public function updated($id=null)
 	{
-		$data['head'] 		= 'Ubah Master Bank';
+		if(!group(array('1','2'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
+		$data['head'] 		= 'Ubah Rekening Bank';
 		$data['record'] 	= $this->data->get_id($id);
 		$data['content'] 	= $this->folder.'form';
 		$data['style'] 		= $this->folder.'style';
@@ -54,8 +69,7 @@ class Bank extends CI_Controller {
         foreach ($record as $row) {
             $no++;
             $col = array();
-            $col[] = '<input type="checkbox" class="data-check" value="'.$row->id.'">';
-			$col[] = $row->kode;
+            $col[] = $row->kode;
 			$col[] = $row->bank;
             $col[] = $row->rekening;
             $col[] = $row->nama;
@@ -107,20 +121,25 @@ class Bank extends CI_Controller {
     
     public function ajax_delete($id)
     {
-        $this->data->delete($id);
+		if(!group(array('1'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
+		$this->data->delete($id);
 		//helper_log("trash", "Menghapus Master Bank");
         echo json_encode(array("status" => TRUE));
     }
     
-    public function ajax_delete_all()
-    {
-        $list_id = $this->input->post('id');
-        foreach ($list_id as $id) {
-            $this->data->delete($id);
-			//helper_log("trash", "Menghapus Master Bank");
-        }
-        echo json_encode(array("status" => TRUE));
-    }
+    // public function ajax_delete_all()
+    // {
+    //     $list_id = $this->input->post('id');
+    //     foreach ($list_id as $id) {
+    //         $this->data->delete($id);
+	// 		//helper_log("trash", "Menghapus Master Bank");
+    //     }
+    //     echo json_encode(array("status" => TRUE));
+    // }
 	
 	private function validation($id=null)
     {

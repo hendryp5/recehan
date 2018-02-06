@@ -59,6 +59,7 @@ class Nasabah_m extends MY_Model
         $record->pendapatan_pasangan = '';
         $record->perumahan_id = '';
         $record->kavling_id = '';
+        $record->gambar = '';
         //$record->status = '';
         return $record;
     }

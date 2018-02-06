@@ -12,7 +12,9 @@ class Perusahaan extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('perusahaan_m', 'data');
-		//signin();
+		$this->load->helper('my_helper');
+		$this->load->library('image_lib');
+		signin();
 	}
 	
 	public function index()
@@ -29,12 +31,15 @@ class Perusahaan extends CI_Controller {
 		}else{
 			redirect('master/perusahaan/created');
 		}
-		
-		
 	}
 
 	public function created()
 	{
+		if(!group(array('1','2'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
 		$data['head'] 		= 'Profil perusahaan';
 		$data['record'] 	= $this->data->get_new();
 		$data['content'] 	= $this->folder.'form';
@@ -45,12 +50,30 @@ class Perusahaan extends CI_Controller {
 
 	public function updated($id=null)
 	{
+		if(!group(array('1','2'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+
 		$data['head'] 		= 'Profil perusahaan';
 		$data['record'] 	= $this->data->get_id($id);
 		$data['content'] 	= $this->folder.'form';
 		$data['style'] 		= $this->folder.'style';
 		$data['js'] 		= $this->folder.'js';
 		
+		$this->load->view('template', $data);
+	}
+
+	public function detail()
+	{
+		$code = $this->session->userdata('code');
+		$find = $this->data->get_perusahaan($code);
+		
+		$data['head'] 		= 'Profil Perusahaan';
+		$data['record'] 	= $this->data->get_id($find->id);
+		$data['content'] 	= $this->folder.'default';
+		$data['style'] 		= $this->folder.'style';
+		$data['js'] 		= $this->folder.'js';
 		$this->load->view('template', $data);
 	}
 	
@@ -86,11 +109,12 @@ class Perusahaan extends CI_Controller {
         $data = array(
 			'perusahaan' => $this->input->post('perusahaan'),
 			'alamat' => $this->input->post('alamat'),
+			'pemilik' => $this->input->post('pemilik'),
 			'telpon' => $this->input->post('telpon'),
 			'fax' => $this->input->post('fax'),
 			'email' => $this->input->post('email'),
 			'website' => $this->input->post('website'),
-			'logo' => $this->input->post('logo'),
+			'logo' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code')
 		);
         
@@ -104,12 +128,13 @@ class Perusahaan extends CI_Controller {
     {
         $data = array(
 			'perusahaan' => $this->input->post('perusahaan'),
+			'pemilik' => $this->input->post('pemilik'),
 			'alamat' => $this->input->post('alamat'),
 			'telpon' => $this->input->post('telpon'),
 			'fax' => $this->input->post('fax'),
 			'email' => $this->input->post('email'),
 			'website' => $this->input->post('website'),
-			'logo' => $this->input->post('logo'),
+			'logo' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code')
 		);
 
@@ -121,28 +146,39 @@ class Perusahaan extends CI_Controller {
     
     public function ajax_delete($id)
     {
-        $this->data->delete($id);
+		if(!group(array('1'))){
+			$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+			redirect('dashboard');
+		}
+		$this->data->delete($id);
 		//helper_log("trash", "Menghapus Master perusahaan");
         echo json_encode(array("status" => TRUE));
     }
     
-    public function ajax_delete_all()
-    {
-        $list_id = $this->input->post('id');
-        foreach ($list_id as $id) {
-            $this->data->delete($id);
-			//helper_log("trash", "Menghapus Master perusahaan");
-        }
-        echo json_encode(array("status" => TRUE));
-    }
+    // public function ajax_delete_all()
+    // {
+	// 	if(!group(array('1'))){
+	// 		$this->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+	// 		redirect('dashboard');
+	// 	}
+	// 	$list_id = $this->input->post('id');
+    //     foreach ($list_id as $id) {
+    //         $this->data->delete($id);
+	// 		//helper_log("trash", "Menghapus Master perusahaan");
+    //     }
+    //     echo json_encode(array("status" => TRUE));
+    // }
 	
 	private function validation($id=null)
     {
         $data = array('success' => false, 'messages' => array());
 		$this->form_validation->set_rules("perusahaan", "Nama Perusahaan", "trim|required");
+		$this->form_validation->set_rules("pemilik", "Nama Perusahaan", "trim|required");
 		$this->form_validation->set_rules("alamat", "Alamat Lengkap", "trim|required");
 		$this->form_validation->set_rules("telpon", "Nomer Telpon", "trim|required");
-		$this->form_validation->set_rules("email", "Email", "trim|required");
+		$this->form_validation->set_rules("fax", "Nomer Fax", "trim");
+		$this->form_validation->set_rules("email", "Email", "trim|valid_email|required");
+		$this->form_validation->set_rules("website", "Website", "trim");
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
         if($this->form_validation->run()){
             $data['success'] = true;
@@ -153,5 +189,39 @@ class Perusahaan extends CI_Controller {
         }
         echo json_encode($data);
         return $this->form_validation->run();
-    }
+	}
+	
+	public function ajax_upload(){
+		$result = array();
+		// konfigurasi gambar yang akan diupload
+		if (isset($_FILES) ) {
+			$FILES = array();
+			foreach ($_FILES as $file){
+				// resize for thumbnail
+				// membuat 'thumbnail'
+				$config['source_image'] = $file['tmp_name'];
+				$config['height'] = 200;
+				// pertahankan proporsi gambar
+				$config['maintain_ratio'] = TRUE;
+				// beri akhiran .thumb
+				$file['tmp_name_thumb'] = $file['tmp_name'].'.thumb';
+				$config['new_image'] = basename($file['tmp_name_thumb']);
+				// POTONG
+				$this->image_lib->initialize($config);
+				if ( ! $this->image_lib->resize())
+				{
+			        die(json_encode($this->image_lib->display_errors()));
+				}
+				// simpan untuk hasil
+				$FILES[] = $file;
+			}	
+			// upload semua gambar ke cdn
+			$result = $this->file->create_files($FILES);
+		}
+		else {
+			$result = array('error'=>"Files empty",'success'=>false);
+		}
+		// cetak hasil dalam bentuk dokumen .json, nb: biarkan slash '/' apa-adanya
+		echo json_encode($result,JSON_UNESCAPED_SLASHES);
+	}
 }

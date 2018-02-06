@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 |--------------------------------------------------------------------------
 | CloudKilat 
@@ -12,9 +11,7 @@ $config['cloud_kilat']['default_bucket'] = 'cdn.julak.id';
 $config['cloud_kilat']['access_key'] = '521ee9cfe9a63237681e';
 $config['cloud_kilat']['secret_key'] = 'iH9o9sfTxbE2ZsgbS5sGPCapMDtS8la4HoXPQgBi';
 $config['cloud_kilat']['default_path'] = 'sakasistem'; // tanpa slash diakhir
-$config['cloud_kilat']['prefix'] = 'u-';
-
-
+$config['cloud_kilat']['prefix'] = 'id-';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -153,7 +150,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = TRUE;
+$config['composer_autoload'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------

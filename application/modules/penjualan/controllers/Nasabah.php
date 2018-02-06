@@ -12,7 +12,8 @@ class Nasabah extends CI_Controller {
 		parent::__construct();
 		$this->load->model('nasabah_m', 'data');
 		$this->load->helper('my_helper');
-		//signin();
+		$this->load->library('image_lib');
+		signin();
 	}
 	
 	public function index()
@@ -26,9 +27,16 @@ class Nasabah extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
+	public function kavlingjson($id)
+	{
+		
+		echo json_encode($this->data->get_kav($id));
+		
+	}
+
 	public function created()
 	{
-		$data['head'] 		= 'Tambah Data Nasabah';
+		$data['head'] 		= 'Ubah Data Nasabah';
 		$data['record'] 	= $this->data->get_new();
 		$data['content'] 	= $this->folder.'form';
 		$data['style'] 		= $this->folder.'style';
@@ -37,17 +45,10 @@ class Nasabah extends CI_Controller {
 		$data['group_kw'] 	= $this->data->get_group_kw();
 		$data['group_pd'] 	= $this->data->get_group_pd();
 		$data['group_agama']= $this->data->get_group_agama();
-		$data['group_kav']  = $this->data->get_group_kav();
 		$data['group_pkj']  = $this->data->get_group_pkj();
-
+		$data['group_kav']  = $this->data->get_group_kav();
+		
 		$this->load->view('template', $data);
-	}
-
-	public function kavlingjson($id)
-	{
-		
-		echo json_encode($this->data->get_kav($id));
-		
 	}
 
 	public function updated($id=null)
@@ -61,11 +62,29 @@ class Nasabah extends CI_Controller {
 		$data['group_kw'] 	= $this->data->get_group_kw();
 		$data['group_pd'] 	= $this->data->get_group_pd();
 		$data['group_agama']= $this->data->get_group_agama();
+		$data['group_pkj']  = $this->data->get_group_pkj();
 		$data['group_kav']  = $this->data->get_group_kav();
 		
 		$this->load->view('template', $data);
 	}
 	
+	public function detail($id=null)
+	{
+		$data['head'] 		= 'Data Nasabah';
+		$data['record'] 	= $this->data->get_id($id);
+		$data['content'] 	= $this->folder.'form_detail';
+		$data['style'] 		= $this->folder.'style';
+		$data['js'] 		= $this->folder.'js';
+		$data['group'] 		= $this->data->get_group();
+		$data['group_kw'] 	= $this->data->get_group_kw();
+		$data['group_pd'] 	= $this->data->get_group_pd();
+		$data['group_agama']= $this->data->get_group_agama();
+		$data['group_pkj']  = $this->data->get_group_pkj();
+		$data['group_kav']  = $this->data->get_group_kav();
+		
+		$this->load->view('template', $data);
+	}
+
 	public function ajax_list()
     {
         $record	= $this->data->get_datatables();
@@ -75,24 +94,14 @@ class Nasabah extends CI_Controller {
         foreach ($record as $row) {
             $no++;
             $col = array();
-            $col[] = '<input type="checkbox" class="data-check" value="'.$row->id.'">';
-			$col[] = $row->ktp;
-			$col[] = $row->nama;
-			$col[] = $row->email;
-			$col[] = pendidikan($row->pendidikan);
-			$col[] = $row->instansi;
-			$col[] = rupiah($row->pendapatan);
-			$col[] = rupiah($row->angsuran);
-			$col[] = $row->tmlahir;
-			$col[] = ddMMMyyyy($row->tglahir);
-			$col[] = sex($row->sex);
-			$col[] = pekerjaan($row->pekerjaan);
-			$col[] = $row->alamat_kantor;
-			$col[] = $row->telpon_kantor;
-			$col[] = $row->pasangan;
-			$col[] = $row->alamat_kantor_pasangan;
-			$col[] = '<a class="btn btn-xs btn-flat btn-warning" onclick="edit_data();" href="'.site_url('penjualan/nasabah/updated/'.$row->id).'" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                  <a class="btn btn-xs btn-flat btn-danger" data-toggle="tooltip" title="Hapus" onclick="deleted('."'".$row->id."'".')"><i class="glyphicon glyphicon-trash"></i></a>';
+            $col[] = '<a onclick="detail_data();" href="'.site_url('penjualan/nasabah/detail/'.$row->id).'">'.$row->nama.'</a>';
+			$col[] = $row->telpon1;
+			$col[] = $row->alamat1;
+			$col[] = nama_kavling($row->kavling_id);
+			$col[] = tipe_kavling($row->kavling_id);
+			$col[] = perumahan($row->perumahan_id);
+			/*$col[] = '<a class="btn btn-xs btn-flat btn-warning" onclick="edit_data();" href="'.site_url('penjualan/nasabah/updated/'.$row->id).'" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a class="btn btn-xs btn-flat btn-danger" data-toggle="tooltip" title="Hapus" onclick="deleted('."'".$row->id."'".')"><i class="glyphicon glyphicon-trash"></i></a>';*/
             $data[] = $col;
         }
  
@@ -109,40 +118,42 @@ class Nasabah extends CI_Controller {
     {
 
         $data = array(
-			'ktp' => $this->input->post('ktp'),
-			'nama' => $this->input->post('nama'),
-			'tmlahir' => $this->input->post('tmlahir'),
-			'tglahir' => $this->input->post('tglahir'),
-			'sex' => $this->input->post('sex'),
-			'kawin' => $this->input->post('kawin'),
-			'pendidikan' => $this->input->post('pendidikan'),
-			'agama' => $this->input->post('agama'),
-			'alamat1' => $this->input->post('alamat1'),
-			'alamat2' => $this->input->post('alamat2'),
-			'telpon1' => $this->input->post('telpon1'),
-			'telpon2' => $this->input->post('telpon2'),
-			'wa' => $this->input->post('wa'),
-			'email' => $this->input->post('email'),
-			'pekerjaan' => $this->input->post('pekerjaan'),
-			'instansi' => $this->input->post('instansi'),
-			'alamat_kantor' => $this->input->post('alamat_kantor'),
-			'telpon_kantor' => $this->input->post('telpon_kantor'),
-			'status_pegawai' => $this->input->post('status_pegawai'),
-			'lama_bekerja' => $this->input->post('lama_bekerja'),
-			'pendapatan' => $this->input->post('pendapatan'),
-			'angsuran' => $this->input->post('angsuran'),
-			'npwp' => $this->input->post('npwp'),
-			'join_income' => $this->input->post('join_income'),
-			'pasangan' => $this->input->post('pasangan'),
-			'telpon_pasangan' => $this->input->post('telpon_pasangan'),
-			'pekerjaan_pasangan' => $this->input->post('pekerjaan_pasangan'),
-			'instansi_pasangan' => $this->input->post('instansi_pasangan'),
-			'alamat_kantor_pasangan' => $this->input->post('alamat_kantor_pasangan'),
-			'telpon_kantor_pasangan' => $this->input->post('telpon_kantor_pasangan'),
-			'status_pegawai_pasangan' => $this->input->post('status_pegawai_pasangan'),
-			'lama_berkerja_pasangan' => $this->input->post('lama_bekerja_pasangan'),
-			'pendapatan_pasangan' => $this->input->post('pendapatan_pasangan'),
-			'perumahan_id' => $this->input->post('perumahan_id'),
+			'ktp' => $this->input->post('ktp', TRUE),
+			'nama' => $this->input->post('nama', TRUE),
+			'tmlahir' => $this->input->post('tmlahir', TRUE),
+			'tglahir' => $this->input->post('tglahir', TRUE),
+			'sex' => $this->input->post('sex', TRUE),
+			'kawin' => $this->input->post('kawin', TRUE),
+			'pendidikan' => $this->input->post('pendidikan', TRUE),
+			'agama' => $this->input->post('agama', TRUE),
+			'alamat1' => $this->input->post('alamat1', TRUE),
+			'alamat2' => $this->input->post('alamat2', TRUE),
+			'telpon1' => $this->input->post('telpon1', TRUE),
+			'telpon2' => $this->input->post('telpon2', TRUE),
+			'wa' => $this->input->post('wa', TRUE),
+			'email' => $this->input->post('email', TRUE),
+			'pekerjaan' => $this->input->post('pekerjaan', TRUE),
+			'instansi' => $this->input->post('instansi', TRUE),
+			'alamat_kantor' => $this->input->post('alamat_kantor', TRUE),
+			'telpon_kantor' => $this->input->post('telpon_kantor', TRUE),
+			'status_pegawai' => $this->input->post('status_pegawai', TRUE),
+			'lama_bekerja' => $this->input->post('lama_bekerja', TRUE),
+			'pendapatan' => $this->input->post('pendapatan', TRUE),
+			'angsuran' => $this->input->post('angsuran', TRUE),
+			'npwp' => $this->input->post('npwp', TRUE),
+			'join_income' => $this->input->post('join_income', TRUE),
+			'pasangan' => $this->input->post('pasangan', TRUE),
+			'telpon_pasangan' => $this->input->post('telpon_pasangan', TRUE),
+			'pekerjaan_pasangan' => $this->input->post('pekerjaan_pasangan', TRUE),
+			'instansi_pasangan' => $this->input->post('instansi_pasangan', TRUE),
+			'alamat_kantor_pasangan' => $this->input->post('alamat_kantor_pasangan', TRUE),
+			'telpon_kantor_pasangan' => $this->input->post('telpon_kantor_pasangan', TRUE),
+			'status_pegawai_pasangan' => $this->input->post('status_pegawai_pasangan', TRUE),
+			'lama_berkerja_pasangan' => $this->input->post('lama_bekerja_pasangan', TRUE),
+			'pendapatan_pasangan' => $this->input->post('pendapatan_pasangan', TRUE),
+			'perumahan_id' => $this->input->post('perumahan_id', TRUE),
+			'kavling_id' => $this->input->post('kavling_id', TRUE),
+			'gambar' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code')
 			//'status' => $this->input->post('status')			
 		);
@@ -156,48 +167,51 @@ class Nasabah extends CI_Controller {
     public function ajax_update($id)
     {
         $data = array(
-			'ktp' => $this->input->post('ktp'),
-			'nama' => $this->input->post('nama'),
-			'tmlahir' => $this->input->post('tmlahir'),
-			'tglahir' => $this->input->post('tglahir'),
-			'sex' => $this->input->post('sex'),
-			'kawin' => $this->input->post('kawin'),
-			'pendidikan' => $this->input->post('pendidikan'),
-			'agama' => $this->input->post('agama'),
-			'alamat1' => $this->input->post('alamat1'),
-			'alamat2' => $this->input->post('alamat2'),
-			'telpon1' => $this->input->post('telpon1'),
-			'telpon2' => $this->input->post('telpon2'),
-			'wa' => $this->input->post('wa'),
-			'email' => $this->input->post('email'),
-			'pekerjaan' => $this->input->post('pekerjaan'),
-			'instansi' => $this->input->post('instansi'),
-			'alamat_kantor' => $this->input->post('alamat_kantor'),
-			'telpon_kantor' => $this->input->post('telpon_kantor'),
-			'status_pegawai' => $this->input->post('status_pegawai'),
-			'lama_bekerja' => $this->input->post('lama_bekerja'),
-			'pendapatan' => $this->input->post('pendapatan'),
-			'angsuran' => $this->input->post('angsuran'),
-			'npwp' => $this->input->post('npwp'),
-			'join_income' => $this->input->post('join_income'),
-			'pasangan' => $this->input->post('pasangan'),
-			'telpon_pasangan' => $this->input->post('telpon_pasangan'),
-			'pekerjaan_pasangan' => $this->input->post('pekerjaan_pasangan'),
-			'instansi_pasangan' => $this->input->post('instansi_pasangan'),
-			'alamat_kantor_pasangan' => $this->input->post('alamat_kantor_pasangan'),
-			'telpon_kantor_pasangan' => $this->input->post('telpon_kantor_pasangan'),
-			'status_pegawai_pasangan' => $this->input->post('status_pegawai_pasangan'),
-			'lama_berkerja_pasangan' => $this->input->post('lama_bekerja_pasangan'),
-			'pendapatan_pasangan' => $this->input->post('pendapatan_pasangan'),
-			'perumahan_id' => $this->input->post('perumahan_id'),
+			'ktp' => $this->input->post('ktp', TRUE),
+			'nama' => $this->input->post('nama', TRUE),
+			'tmlahir' => $this->input->post('tmlahir', TRUE),
+			'tglahir' => $this->input->post('tglahir', TRUE),
+			'sex' => $this->input->post('sex', TRUE),
+			'kawin' => $this->input->post('kawin', TRUE),
+			'pendidikan' => $this->input->post('pendidikan', TRUE),
+			'agama' => $this->input->post('agama', TRUE),
+			'alamat1' => $this->input->post('alamat1', TRUE),
+			'alamat2' => $this->input->post('alamat2', TRUE),
+			'telpon1' => $this->input->post('telpon1', TRUE),
+			'telpon2' => $this->input->post('telpon2', TRUE),
+			'wa' => $this->input->post('wa', TRUE),
+			'email' => $this->input->post('email', TRUE),
+			'pekerjaan' => $this->input->post('pekerjaan', TRUE),
+			'instansi' => $this->input->post('instansi', TRUE),
+			'alamat_kantor' => $this->input->post('alamat_kantor', TRUE),
+			'telpon_kantor' => $this->input->post('telpon_kantor', TRUE),
+			'status_pegawai' => $this->input->post('status_pegawai', TRUE),
+			'lama_bekerja' => $this->input->post('lama_bekerja', TRUE),
+			'pendapatan' => $this->input->post('pendapatan', TRUE),
+			'angsuran' => $this->input->post('angsuran', TRUE),
+			'npwp' => $this->input->post('npwp', TRUE),
+			'join_income' => $this->input->post('join_income', TRUE),
+			'pasangan' => $this->input->post('pasangan', TRUE),
+			'telpon_pasangan' => $this->input->post('telpon_pasangan', TRUE),
+			'pekerjaan_pasangan' => $this->input->post('pekerjaan_pasangan', TRUE),
+			'instansi_pasangan' => $this->input->post('instansi_pasangan', TRUE),
+			'alamat_kantor_pasangan' => $this->input->post('alamat_kantor_pasangan', TRUE),
+			'telpon_kantor_pasangan' => $this->input->post('telpon_kantor_pasangan', TRUE),
+			'status_pegawai_pasangan' => $this->input->post('status_pegawai_pasangan', TRUE),
+			'lama_berkerja_pasangan' => $this->input->post('lama_bekerja_pasangan', TRUE),
+			'pendapatan_pasangan' => $this->input->post('pendapatan_pasangan', TRUE),
+			'perumahan_id' => $this->input->post('perumahan_id', TRUE),
+			'kavling_id' => $this->input->post('kavling_id', TRUE),
+			'gambar' => $this->input->post('gambar'),
 			'code' => $this->session->userdata('code'),
 			//'status' => $this->input->post('status')	
 		);
 
-        if($this->validation($id)){
+        	if($this->validation()){
             $this->data->update($data, $id);
 			//helper_log("edit", "Merubah Data Perumahan");
         }
+        
     }
     
     public function ajax_delete($id)
@@ -222,7 +236,7 @@ class Nasabah extends CI_Controller {
         $data = array('success' => false, 'messages' => array());
 		$this->form_validation->set_rules("ktp", "Ktp", "trim|required");
 		$this->form_validation->set_rules("nama", "Nama Nasabah", "trim|required");
-		$this->form_validation->set_rules("tmlahir", "Tempat Lahir", "trim|required");
+		/*$this->form_validation->set_rules("tmlahir", "Tempat Lahir", "trim|required");
 		$this->form_validation->set_rules("tglahir", "Tanggal Lahir", "trim|required");
 		$this->form_validation->set_rules("sex", "Jenis Kelamin", "trim|required");
 		$this->form_validation->set_rules("kawin", "Kawin", "trim|required");
@@ -242,9 +256,9 @@ class Nasabah extends CI_Controller {
 		$this->form_validation->set_rules("lama_bekerja", "Lama Bekerja", "trim|required");
 		$this->form_validation->set_rules("pendapatan", "Pendapatan", "trim|required");
 		$this->form_validation->set_rules("angsuran", "Angsuran", "trim|required");
-		$this->form_validation->set_rules("npwp", "NPWP", "trim|required");
+		$this->form_validation->set_rules("npwp", "NPWP", "trim|required");*/
 		//$this->form_validation->set_rules("join_income", "Join Income", "trim|required");
-		$this->form_validation->set_rules("perumahan_id", "Perumahan", "trim|required");			
+		//$this->form_validation->set_rules("perumahan_id", "Perumahan", "trim|required");			
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
         if($this->form_validation->run()){
             $data['success'] = true;
@@ -276,6 +290,39 @@ class Nasabah extends CI_Controller {
         echo json_encode($data);
 	}
 
-   
+   public function ajax_upload(){
+		
+		$result = array();
+		// konfigurasi gambar yang akan diupload
+		if (isset($_FILES) ) {
+			$FILES = array();
+			foreach ($_FILES as $file){
+				// resize for thumbnail
+				// membuat 'thumbnail'
+				$config['source_image'] = $file['tmp_name'];
+				$config['height'] = 200;
+				// pertahankan proporsi gambar
+				$config['maintain_ratio'] = TRUE;
+				// beri akhiran .thumb
+				$file['tmp_name_thumb'] = $file['tmp_name'].'.thumb';
+				$config['new_image'] = basename($file['tmp_name_thumb']);
+				// POTONG
+				$this->image_lib->initialize($config);
+				if ( ! $this->image_lib->resize())
+				{
+			        die(json_encode($this->image_lib->display_errors()));
+				}
+				// simpan untuk hasil
+				$FILES[] = $file;
+			}	
+			// upload semua gambar ke cdn
+			$result = $this->file->create_files($FILES);
+		}
+		else {
+			$result = array('error'=>"Files empty",'success'=>false);
+		}
+		// cetak hasil dalam bentuk dokumen .json, nb: biarkan slash '/' apa-adanya
+		echo json_encode($result,JSON_UNESCAPED_SLASHES);
+	}
    
 }

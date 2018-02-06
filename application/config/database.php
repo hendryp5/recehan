@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
-	'username' => 'sakaSystemApi',
-	'password' => 'SakaSecureSimpleSecret',
-	'database' => 'saka',
+	'hostname' => 'localhost',
+	'username' => 'betasaka_users',
+	'password' => 'password@)!&',
+	'database' => 'betasaka_dbase',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

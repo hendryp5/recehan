@@ -25,11 +25,13 @@ class Perusahaan_m extends MY_Model
         $record = new stdClass();
         $record->id = '';
         $record->perusahaan = '';
+        $record->pemilik = '';
         $record->alamat = '';
         $record->telpon = '';
         $record->fax = '';
         $record->email = '';
         $record->website = '';
+        $record->logo = '';
         return $record;
     }
 	

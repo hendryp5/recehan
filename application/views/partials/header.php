@@ -4,7 +4,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SAKA</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>SAKA SISTEM</b></span>
+      <span class="logo-lg"><img src="<?= base_url('asset/dist/img/tulisan.png'); ?>" width="170" height="35"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -41,14 +41,14 @@
                 <img src="<?= $this->session->userdata('gambar'); ?>" class="img-circle" alt="User Image">
                 <?php } ?>
                 <p>
-                  <?= $this->session->userdata('username'); ?> <br>
-                  <small>&nbsp;</small>
+                  <?= $this->session->userdata('nama'); ?> <br>
+                  <small><?= level($this->session->userdata('level')); ?> </small>
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profil</a>
+                  <a href="<?= site_url('master/pengguna/detail/'.$this->session->userdata('userid')); ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profil</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?= site_url('logout'); ?>" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Keluar</a>

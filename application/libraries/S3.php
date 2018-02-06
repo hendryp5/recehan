@@ -95,10 +95,11 @@ class S3 {
 	* @return array | false
 	*/
 	public static function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
+  		echo '<script>';
+  		echo 'console.log('. json_encode( $data ) .')';
+  		echo '</script>';
 	}
+	
 	public static function getBucket($bucket) {
 		$rest = new S3Request('GET', $bucket, '');
 		$response = $rest->getResponse();

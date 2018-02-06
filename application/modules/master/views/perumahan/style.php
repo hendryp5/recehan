@@ -1,0 +1,1 @@
+<style>.dl-horizontal dt{text-align:left !important} .croppie-container{height:250px !important;}dd ul {margin:0px;padding:0px;list-style:none;}</style>

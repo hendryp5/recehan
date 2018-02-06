@@ -60,13 +60,18 @@ function save()
 {
     var location = window.location.href;
     var process = location.substring(location.lastIndexOf('/')+1);
+    var process = location.split('/');
+    var process = process[6];
     
     if(process == 'created'){
 		var current = window.location.toString();
 		var url = current.replace(/created/, 'ajax_save');
-    }else{
+    }else if(process == 'updated') {
 		var current = window.location.toString();
 		var url = current.replace(/updated/, 'ajax_update');
+    } else {
+        var current = window.location.toString();
+        var url = current.replace(/created_followup/, 'ajax_save');
     }
     
     $.ajax({
@@ -81,7 +86,6 @@ function save()
                     '<span class="glyphicon glyphicon-ok"></span>' +
                     ' Data berhasil disimpan.' +
                     '</div>');
-			  
                     $('.form-group').removeClass('has-error')
                                     .removeClass('has-success');
                     $('.text-danger').remove();
@@ -93,6 +97,7 @@ function save()
                         $(this).remove();
                         });
                     })
+                    
                     reload_table();
             }else{
                 $.each(data.messages, function(key, value) {
@@ -117,14 +122,19 @@ function saveout()
 {
     var location = window.location.href;
     var process = location.substring(location.lastIndexOf('/')+1);
+    var process = location.split('/');
+    var process = process[6];
     
     if(process == 'created'){
-		var current = window.location.toString();
-		var url = current.replace(/created/, 'ajax_save');
-    }else{
-		var current = window.location.toString();
-		var url = current.replace(/updated/, 'ajax_update');
-    }
+        var current = window.location.toString();
+        var url = current.replace(/created/, 'ajax_save');
+    } else if(process == 'updated') {
+        var current = window.location.toString();
+        var url = current.replace(/updated/, 'ajax_update');
+    } else {
+        var current = window.location.toString();
+        var url = current.replace(/created_followup/, 'ajax_save');
+    } 
     
     $.ajax({
         url : url,
@@ -411,3 +421,4 @@ $(document).keypress(function(e) {
     saveout();
   }
 });
+

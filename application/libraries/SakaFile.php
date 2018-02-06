@@ -6,8 +6,8 @@ class SakaFile extends S3 {
     // Dependencies
     $this->CI = &get_instance();
     $this->user = $this->CI->session->userdata();
-    $this->user['id'] = &$this->user['userID'] || '';
-    $this->user['username'] = &$this->user['username'] || '';
+    $this->user['id'] = &$this->user['userid'] || '';
+    $this->user['code'] = &$this->user['code'] || '';
     // $this->is_login()?signin():'';
     $this->config = $this->CI->config->item('cloud_kilat');
     $this->user['folder'] = $this->create_folder_name();
@@ -29,12 +29,12 @@ class SakaFile extends S3 {
     if (isset($secret_key)) $this->config['secret_key'] = $secret_key;
     
     $this->ck = new parent($this->config['access_key'],$this->config['secret_key'],$this->config['host']);
-    
+    parent::__construct();
   }
   // Struktur folder cdn saka
   public function create_folder_name(){
     // create folder name
-    return $this->config['prefix'].$this->user['id'].'-'.$this->user['username'];
+    return $this->config['prefix'].$this->user['code'];
   }
   // Format filename cdn saka
   // actual CI Filename encryption implementation
@@ -45,7 +45,7 @@ class SakaFile extends S3 {
   // Cek login status
   // Otomatis deteksi session
   public function is_login(){
-    if (empty($this->user['userID'])){
+    if (empty($this->user['userid'])){
      return false;
     }
     return true;
@@ -70,7 +70,7 @@ class SakaFile extends S3 {
       return true;
     }else{
         // create .dir
-      return $this->ck->putObject('.dir',$this->bucket,$folder.'/'.$this->dirfile,$this->ck->ACL_PUBLIC_READ);
+      return $this->ck->putObject('.dir',$this->bucket,$folder.'/'.$this->dirfile,S3::ACL_PUBLIC_READ);
     }
   }
 

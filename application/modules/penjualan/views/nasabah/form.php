@@ -10,7 +10,7 @@
 </div>
 <!-- Page Content -->
 <div id="page-wrapper">
-    <form id="formID" role="form" action="" method="post">
+    <form id="formID" role="form"  method="post">
         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
             <br>
             <div id="smartwizard">
@@ -95,7 +95,6 @@
                                 echo form_error('pendidikan') ? form_error('pendidikan', '<p class="help-block">','</p>') : '';
                                 ?>
                             </div>
-
                         </div>
                         <div class="col-md-12">
                             <div class="form-group <?php echo form_error('agama') ? 'has-error' : null; ?>">
@@ -107,6 +106,21 @@
                                 ?>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group <?php echo form_error('avatar') ? 'has-error' : null; ?>">
+                                <?php
+                                echo form_label('GAMBAR KAVLING','avatar');
+                                $data = array('class'=>'form-control','name'=>'avatar','id'=>'avatar','type'=>'file', 'accept'=>'image/*','placeholder'=>'Masukkan Password yang sama kembali','value'=>set_value('avatar', $record->gambar));
+                                echo form_input($data);
+                                echo form_error('avatar') ? form_error('avatar', '<p class="help-block">','</p>') : '';
+                                ?>
+                                <input type="hidden" name="gambar" id="url-gambar" value="<?= set_value('gambar', $record->gambar); ?>" />
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <img id="upload-avatar" src="<?= $record->gambar; ?>">
+                    </div> 
+
                     </div>
                 </div>
 
@@ -276,6 +290,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="pasangannb">
                     <div class="row">
                          <div class="col-md-12">
@@ -416,44 +431,21 @@
                         </div> 
                     </div>  
                 </div> 
+
             </div>
         </div>
             <div class="box-footer">
-                    <button type="button" class="btn btn-sm btn-flat btn-success" onclick="save()"><i class="fa fa-save"></i> Simpan</button>
-                    <button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveout();"><i class="fa fa-save"></i> Simpan & Keluar</button>
+                    <button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveoutupload();"><i class="fa fa-save"></i> Simpan & Keluar</button>
                     <button type="reset" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-refresh"></i> Reset</button>
                     <button type="button" class="btn btn-sm btn-flat btn-danger" onclick="back();"><i class="fa fa-close"></i> Keluar</button>
             </div>
         </div>
         <!-- /.row -->
+        
     </div>
-    <!-- /.container-fluid -->
     </form>
+    <!-- /.container-fluid -->
+    
 </div>
 </div>
 
-<!-- /#page-wrapper -->
-
-<style type="text/css">
-@media screen and (min-width: 460px) {
-  #modal-gambar .modal-dialog  {width:940px;}
-  #modal-tautan .modal-dialog  {width:940px;}
-}
-</style>
-<div class="file-modal">
-  <div class="modal fade" id="modal-gambar">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Pilih Gambar Perumahan</h4>
-        </div>
-        <div class="modal-body">
-					<div class="frame">
-          <iframe height="500" src="<?php echo base_url('filemanager/dialog.php?type=1&field_id=gambar&relative_url=3'); ?>" frameborder="0" style="overflow: scroll !important; overflow-x: hidden; overflow-y: scroll auto; min-width: 460px; width: 910px; "></iframe>
-					</div>
-				</div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-</div><!-- /.example-modal -->

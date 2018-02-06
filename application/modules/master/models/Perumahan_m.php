@@ -26,6 +26,12 @@ class Perumahan_m extends MY_Model
         $record->id = '';
         $record->perumahan = '';
         $record->lokasi = '';
+        $record->alamat = '';
+        $record->telpon = '';
+        $record->email = '';
+        $record->latitude = '';
+        $record->longitude = '';
+        $record->informasi = '';
         $record->gambar = '';
         return $record;
     }
@@ -98,4 +104,15 @@ class Perumahan_m extends MY_Model
         $query = $this->db->get($this->table);
         return $query->row();
     }
+
+    function get_kavling($id=null)
+    {
+        $this->db->where('deleted_at', NULL);
+        $this->db->where('perumahan_id', $id);
+        $this->db->group_by('perumahan_id');
+        $this->db->group_by('type');
+        $query = $this->db->get('kavling');
+        return $query->result();
+    }
+
 }

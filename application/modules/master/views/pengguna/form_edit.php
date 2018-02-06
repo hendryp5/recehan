@@ -15,85 +15,157 @@
 			<div class="box-body">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="form-group <?php echo form_error('fullname') ? 'has-error' : null; ?>">
+						<div class="form-group <?php echo form_error('nama') ? 'has-error' : null; ?>">
 							<?php
-							echo form_label('Nama Lengkap','fullname');
-							$data = array('class'=>'form-control','name'=>'fullname','id'=>'fullname','type'=>'text','value'=>set_value('fullname', $record->fullname));
+							echo form_label('NAMA LENGKAP *','nama');
+							$data = array('class'=>'form-control','name'=>'nama','id'=>'nama','type'=>'text','placeholder'=>'Masukkan Nama Lengkap','value'=>set_value('nama', $record->nama));
 							echo form_input($data);
-							echo form_error('fullname') ? form_error('fullname', '<p class="help-block">','</p>') : '';
+							echo form_error('nama') ? form_error('nama', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
 					<div class="col-md-12">
-						<div class="form-group <?php echo form_error('username') ? 'has-error' : null; ?>">
+						<div class="form-group <?php echo form_error('tmlahir') ? 'has-error' : null; ?>">
 							<?php
-							echo form_label('Username','username');
-							$data = array('class'=>'form-control','name'=>'username','id'=>'username','type'=>'text','value'=>set_value('username', $record->username));
+							echo form_label('TEMPAT LAHIR','tmlahir');
+							$data = array('class'=>'form-control','name'=>'tmlahir','id'=>'tmlahir','type'=>'text','placeholder'=>'Masukkan Tempat Lahir','value'=>set_value('tmlahir', $record->tmlahir));
 							echo form_input($data);
-							echo form_error('username') ? form_error('username', '<p class="help-block">','</p>') : '';
+							echo form_error('tmlahir') ? form_error('tmlahir', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
 					<div class="col-md-12">
-						<div class="form-group <?php echo form_error('email') ? 'has-error' : null; ?>">
+						<div class="form-group <?php echo form_error('tglahir') ? 'has-error' : null; ?>">
 							<?php
-							echo form_label('Email','email');
-							$data = array('class'=>'form-control','name'=>'email','id'=>'email','type'=>'email','value'=>set_value('email', $record->email));
+							echo form_label('TANGGAL LAHIR','tglahir');
+							$data = array('class'=>'form-control tanggal','name'=>'tglahir','id'=>'tglahir','type'=>'text','placeholder'=>'Masukkan Tanggal Lahir','value'=>set_value('tglahir', ddmmyyyy($record->tglahir)));
 							echo form_input($data);
-							echo form_error('email') ? form_error('email', '<p class="help-block">','</p>') : '';
+							echo form_error('tglahir') ? form_error('tglahir', '<p class="help-block">','</p>') : '';
+							?>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('sex') ? 'has-error' : null; ?>">
+							<?php 
+							echo form_label('JENIS KELAMIN *','sex');
+							$selected = set_value('sex', $record->sex);
+							$status = array('0'=>'Pilih Jenis Kelamin','1'=>'LAKI-LAKI','2'=>'PEREMPUAN');
+							echo form_dropdown('sex', $status, $selected, "class='form-control select2' name='sex' id='sex'");
+							echo form_error('sex') ? form_error('jenis_kelamin', '<p class="help-block">','</p>') : '';
+							?>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('agama') ? 'has-error' : null; ?>">
+							<?php 
+							echo form_label('AGAMA / KEPERCAYAAN *','agama');
+							$selected = set_value('agama', $record->agama_id);
+							echo form_dropdown('agama', $agama, $selected, "class='form-control select2' name='agama' id='agama'");
+							echo form_error('agama') ? form_error('agama', '<p class="help-block">','</p>') : '';
+							?>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('pendidikan') ? 'has-error' : null; ?>">
+							<?php 
+							echo form_label('PENDIDIKAN TERAKHIR','pendidikan');
+							$selected = set_value('pendidikan', $record->pendidikan_id);
+							echo form_dropdown('pendidikan', $pendidikan, $selected, "class='form-control select2' name='pendidikan' id='pendidikan'");
+							echo form_error('pendidikan') ? form_error('pendidikan', '<p class="help-block">','</p>') : '';
+							?>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('alamat') ? 'has-error' : null; ?>">
+							<?php
+							echo form_label('ALAMAT *','alamat');
+							$data = array('class'=>'form-control','name'=>'alamat','id'=>'alamat','type'=>'alamat','placeholder'=>'Masukkan Alamat Tinggal/Domisili','value'=>set_value('alamat', $record->alamat));
+							echo form_input($data);
+							echo form_error('alamat') ? form_error('alamat', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group <?php echo form_error('telpon') ? 'has-error' : null; ?>">
 							<?php
-							echo form_label('Telpon','telpon');
-							$data = array('class'=>'form-control','name'=>'telpon','id'=>'telpon','type'=>'text','value'=>set_value('telpon', $record->telpon));
+							echo form_label('TELPON *','telpon');
+							$data = array('class'=>'form-control','name'=>'telpon','id'=>'telpon','type'=>'text','placeholder'=>'Masukkan Nomor Telepon','value'=>set_value('telpon', $record->telpon));
 							echo form_input($data);
 							echo form_error('telpon') ? form_error('telpon', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('email') ? 'has-error' : null; ?>">
+							<?php
+							echo form_label('EMAIL *','email');
+							$data = array('class'=>'form-control','name'=>'email','id'=>'email','type'=>'email','placeholder'=>'Masukkan Email yang Valid','value'=>set_value('email', $record->email));
+							echo form_input($data);
+							echo form_error('email') ? form_error('email', '<p class="help-block">','</p>') : '';
+							?>
+						</div>
+					</div>
+					<?php if(group(array('1','2'))): ?>
 					<div class="col-md-12">
 						<div class="form-group <?php echo form_error('level') ? 'has-error' : null; ?>">
 							<?php 
-							echo form_label('Tingkat Pengguna','level');
-							$selected = set_value('level', $record->level);
-							echo form_dropdown('level', $group, $selected, "class='form-control select2' name='level' id='level'");
+							echo form_label('TINGKAT PENGGUNA *','level');
+							$selected = set_value('level', $record->level_id);
+							echo form_dropdown('level', $level, $selected, "class='form-control select2' name='level' id='level'");
 							echo form_error('level') ? form_error('level', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
 					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('perumahan[]') ? 'has-error' : null; ?>">
+								<?php
+								echo form_label('LOKASI PERUMAHAN *','perumahan');
+								if($list){
+									foreach($list as $x){
+										$data[] = $x->perumahan_id; 
+									}
+								}else{
+									$data[] = FALSE;
+								}
+								//$data = array('J0003417','J0003418');
+								$selected = set_value('perumahan[]', $data);
+								echo form_dropdown('perumahan[]', $perumahan, $selected, "class='form-control select2' id='perumahan' multiple");
+								echo form_error('perumahan[]') ? form_error('perumahan[]', '<p class="help-block">','</p>') : '';
+								?>
+						</div>
+                    </div>
+					<div class="col-md-12">
 						<div class="form-group <?php echo form_error('active') ? 'has-error' : null; ?>">
 							<?php 
-							echo form_label('Status','active');
+							echo form_label('STATUS *','active');
 							$selected = set_value('level', $record->active);
-							$status = array('0'=>'Tidak Aktif','1'=>'Aktif');
+							$status = array('0'=>'TIDAK AKTIF','1'=>'AKTIF');
 							echo form_dropdown('active', $status, $selected, "class='form-control select2' name='active' id='active'");
 							echo form_error('active') ? form_error('active', '<p class="help-block">','</p>') : '';
 							?>
 						</div>
 					</div>
-					 <div class="col-md-12">
-                        <div class="form-group <?php echo form_error('gambar') ? 'has-error' : null; ?>">
-                            <?php
-                            echo form_label('GAMBAR','gambar');
-                            echo ' <div class="input-group input-group">';
-                            $data = array('class'=>'form-control','name'=>'gambar','id'=>'gambar','type'=>'text','value'=>set_value('gambar', $record->gambar));
-                            echo form_input($data);
-                            echo '<span class="input-group-btn"><a data-toggle="modal"  href="javascript;" data-target="#modal-gambar" class="btn btn-info btn-flat" type="button">Pilih Gambar</a></span>';
-                            echo form_error('gambar') ? form_error('gambar', '<p class="help-block">','</p>') : '';
-                            ?>
-                        </div>
-                    </div>
-					
+					<?php endif; ?>
+					<div class="col-md-12">
+						<div class="form-group <?php echo form_error('avatar') ? 'has-error' : null; ?>">
+							<?php
+							echo form_label('GAMBAR PROFIL','avatar');
+							$data = array('class'=>'form-control','name'=>'avatar','id'=>'avatar','type'=>'file', 'accept'=>'image/*','placeholder'=>'Masukkan Password yang sama kembali','value'=>set_value('avatar', $record->avatar));
+							echo form_input($data);
+							echo form_error('avatar') ? form_error('avatar', '<p class="help-block">','</p>') : '';
+							?>
+							<input type="hidden" name="gambar" id="url-gambar" value="<?= set_value('gambar', $record->avatar); ?>" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<img id="upload-avatar" src="<?= $record->avatar; ?>">
+					</div>	
 				</div>
 			</div>
 			<!-- ./box-body -->
 			<div class="box-footer">
-				<button type="button" class="btn btn-sm btn-flat btn-success" onclick="save()"><i class="fa fa-save"></i> Simpan</button>
-				<button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveout();"><i class="fa fa-save"></i> Simpan & Keluar</button>
+				<button type="button" class="btn btn-sm btn-flat btn-info" onclick="saveoutupload();"><i class="fa fa-save"></i> Simpan & Keluar</button>
 				<button type="reset" class="btn btn-sm btn-flat btn-warning"><i class="fa fa-refresh"></i> Reset</button>
 				<button type="button" class="btn btn-sm btn-flat btn-danger" onclick="back();"><i class="fa fa-close"></i> Keluar</button>
 			</div>

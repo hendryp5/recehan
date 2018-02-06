@@ -10,8 +10,9 @@ class Dashboard extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->load->model('dashboard_m', 'data');
-		//signin();
+		$this->load->model('dashboard_m', 'data');
+		$this->load->helper('my_helper');
+		signin();
 	}
 	
 	public function index()
@@ -19,8 +20,14 @@ class Dashboard extends CI_Controller {
 		$data['head'] 		= 'Dashboard';
 		$data['record'] 	= FALSE;
 		$data['content'] 	= $this->folder.'default';
+		$data['perusahaan'] 	= $this->data->get_perusahaan();
+		$data['perumahan'] 	= $this->data->get_perumahan();
+		$data['count_perumahan'] 	= $this->data->count_perumahan();
+		$data['count_kavling'] 	= $this->data->count_kavling();
+		$data['count_nasabah'] 	= $this->data->count_nasabah();
+		$data['count_pengguna'] 	= $this->data->count_pengguna();
 		//$data['style'] 	= $this->folder.'style';
-		//$data['js'] 		= $this->folder.'js';
+		$data['js'] 		= $this->folder.'js';
 		$this->load->view('template', $data);
 	}
 }

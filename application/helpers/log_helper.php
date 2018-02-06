@@ -28,7 +28,7 @@ function helper_log($tipe = "", $str = ""){
         $log_tipe  = 6;
     }
     // paramter
-    $param['log_user']      = $CI->session->userdata('username');
+    $param['log_user']      = $CI->session->userdata('nama');
     $param['log_tipe']      = $log_tipe;
     $param['log_desc']      = $str;
 	$param['log_ip']        = $CI->input->ip_address();
@@ -41,27 +41,25 @@ function helper_log($tipe = "", $str = ""){
 function level($id=null)
 {
 	if($id == 1){
-		$level = 'Administrator';
-	}elseif($id == 2){
-		$level = 'Operasional';
-	}elseif($id == 3){
 		$level = 'Owner';
-	}elseif($id == 4){
-		$level = 'Admin';
-	}elseif($id == 5){
+	}elseif($id == 2){
 		$level = 'Manager';
-	}elseif($id == 6){
-		$level = 'Pemasaran';
-	}elseif($id == 7){
+	}elseif($id == 3){
+		$level = 'Administrasi';
+	}elseif($id == 4){
+		$level = 'Marketing';
+	}elseif($id == 5){
 		$level = 'Keuangan';
-	}elseif($id == 8){
+	}elseif($id == 6){
 		$level = 'Teknik';
-	}elseif($id == 9){
+	}elseif($id == 7){
+		$level = 'Investor';
+	}elseif($id == 8){
 		$level = 'Nasabah';
 	}else{
-		$level = 'Unknown';
+		$level = 'Tidak Di Ketahui';
 	}
-	
+
 	return $level;
 }
 
@@ -94,67 +92,27 @@ function admin()
 
 function group($group)
 {
-	
-	$CI =& get_instance();
-	
+	$CI =& get_instance();	
 	if(!in_array($CI->session->userdata('level'), $group)){
-		$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
-		redirect('dashboard');
+		//$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
+		//redirect('dashboard');
+		return FALSE;
+	}else{
+		return TRUE;
 	}
 }
 
-//function manager()
-//{
-//	$CI =& get_instance();
-//	if(!$CI->session->userdata('signin')){
-//		$CI->session->set_flashdata('flasherror','Anda Harus Login Terlebih Dahulu.');
-//		redirect('login');
-//	}
-//	
-//	if($CI->session->userdata('level') != 2 || $CI->session->userdata('level') != 1){
-//		$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
-//		redirect('dashboard');
-//	}
-//}
-//
-//function pengawas()
-//{
-//	$CI =& get_instance();
-//	if(!$CI->session->userdata('signin')){
-//		$CI->session->set_flashdata('flasherror','Anda Harus Login Terlebih Dahulu.');
-//		redirect('login');
-//	}
-//	
-//	if($CI->session->userdata('level') != 3){
-//		$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
-//		redirect('dashboard');
-//	}
-//}
-//
-//function skpd()
-//{
-//	$CI =& get_instance();
-//	if(!$CI->session->userdata('signin')){
-//		$CI->session->set_flashdata('flasherror','Anda Harus Login Terlebih Dahulu.');
-//		redirect('login');
-//	}
-//	
-//	if($CI->session->userdata('level') != 4){
-//		$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
-//		redirect('dashboard');
-//	}
-//}
-//
-//function pegawai()
-//{
-//	$CI =& get_instance();
-//	if(!$CI->session->userdata('signin')){
-//		$CI->session->set_flashdata('flasherror','Anda Harus Login Terlebih Dahulu.');
-//		redirect('login');
-//	}
-//	
-//	if($CI->session->userdata('level') != 5){
-//		$CI->session->set_flashdata('flasherror','Anda Tidak Memiliki Hak Akses Untuk Modul Tersebut.');
-//		redirect('dashboard');
-//	}
-//}
+if ( ! function_exists('active'))
+{
+	function active($id)
+	{
+		if($id == '1')
+		{
+			return 'Aktif';
+		}
+		else
+		{
+			return 'Tidak Aktif';
+		}
+	}
+}

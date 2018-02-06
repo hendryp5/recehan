@@ -523,6 +523,23 @@ if ( ! function_exists('pendidikan'))
 	}
 }
 
+// Level
+if ( ! function_exists('level'))
+{
+	function level($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('master_level');
+		if ($query->num_rows() > 0) {
+			return $query->row()->level;
+		} else {
+			return '-';
+		}
+	}
+}
+
 //Status Penjualan
 if ( ! function_exists('status_penjualan'))
 {
@@ -530,15 +547,101 @@ if ( ! function_exists('status_penjualan'))
 	{
 		if($value == '1')
 		{
-			return '<a class="btn btn-xs btn-block btn-default btn-flat">TERSEDIA</i></a>';
+			return '<a class="btn btn-xs btn-block btn-success btn-flat">TERSEDIA</i></a>';
 		}
 		else if ($value == '2')
 		{
-			return '<a class="btn btn-xs btn-block btn-danger btn-flat">TERJUAL</a>';
+			return '<a class="btn btn-xs btn-block btn-info btn-flat">TERPESAN</a>';
 		}
 		else if ($value == '3')
 		{
-			return '<a class="btn btn-xs btn-block btn-info btn-flat">TERPESAN</a>';
+			return '<a class="btn btn-xs btn-block btn-danger btn-flat">TERJUAL</a>';
+		}
+		else
+		{
+			return "-";
+		}
+	}
+}
+
+//Daftar Perumahan Users
+if ( ! function_exists('users_perumahan'))
+{
+	function users_perumahan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('user_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('users_perumahan');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return FALSE;
+		}
+	}
+}
+
+if ( ! function_exists('status_penjualan1'))
+{
+	function status_penjualan1($value)
+	{
+		if($value == '1')
+		{
+			return 'TERSEDIA';
+		}
+		else if ($value == '2')
+		{
+			return 'TERPESAN';
+		}
+		else if ($value == '3')
+		{
+			return 'TERJUAL';
+		}
+		else
+		{
+			return "-";
+		}
+	}
+}
+
+if ( ! function_exists('carapembelian'))
+{
+	function carapembelian($value)
+	{
+		if($value == '1')
+		{
+			return 'KPR';
+		}
+		else if ($value == '2')
+		{
+			return 'CASH BERTAHAP';
+		}
+		else if ($value == '3')
+		{
+			return 'CASH KERAS';
+		}
+		else
+		{
+			return "-";
+		}
+	}
+}
+
+if ( ! function_exists('button_penjualan'))
+{
+	function button_penjualan($value,$id,$kavling)
+	{
+		if($value == '1')
+		{
+			return '<a class="btn btn-xs btn-block btn-success btn-flat" onclick="detail_data();" href="'.site_url('penjualan/daftarkavling/detail/'.$id).'">'.$kavling.'</a>';
+		}
+		else if ($value == '2')
+		{
+			return '<a class="btn btn-xs btn-block btn-info btn-flat" onclick="detail_data();" href="'.site_url('penjualan/daftarkavling/detail/'.$id).'">'.$kavling.'</a>';
+		}
+		else if ($value == '3')
+		{
+			return '<a class="btn btn-xs btn-block btn-danger btn-flat" onclick="detail_data();" href="'.site_url('penjualan/daftarkavling/detail/'.$id).'">'.$kavling.'</a>';
 		}
 		else
 		{
@@ -579,6 +682,34 @@ if ( ! function_exists('melalui'))
 	}
 }
 
+//kesimpulan
+if ( ! function_exists('hasil'))
+{
+	function hasil($value)
+	{
+		if($value == '1')
+		{
+			return 'BELUM BERMINAT';
+		}
+		else if ($value == '2')
+		{
+			return 'PIKIR-PIKIR';
+		}
+		else if ($value == '3')
+		{
+			return 'BERMINAT';
+		}
+		else if ($value == '4')
+		{
+			return 'DEAL';
+		}
+		else
+		{
+			return "-";
+		}
+	}
+}
+
 if ( ! function_exists('perumahan'))
 {
 	function perumahan($value)
@@ -595,12 +726,77 @@ if ( ! function_exists('perumahan'))
 	}
 }
 
+if ( ! function_exists('detail_perumahan'))
+{
+	function detail_perumahan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('master_perumahan');
+		if ($query->num_rows() > 0) {
+			return $query->row();
+		} else {
+			return '-';
+		}
+	}
+}
+
+if ( ! function_exists('nama_kavling'))
+{
+	function nama_kavling($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return $query->row()->kavling;
+		} else {
+			return '-';
+		}
+	}
+}
+
+if ( ! function_exists('tipe_kavling'))
+{
+	function tipe_kavling($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return $query->row()->type;
+		} else {
+			return '-';
+		}
+	}
+}
+
+if ( ! function_exists('status_pemesanan'))
+{
+	function status_pemesanan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('ktp',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('pajb');
+		if ($query->num_rows() > 0) {
+			return 'Pemesanan Unit';
+		} else {
+			return '-';
+		}
+	}
+}
+
 if ( ! function_exists('total_unit'))
 {
-	function total_unit($value)
+	function total_unit($value,$value2)
 	{
 		$CI =& get_instance();
 		$CI->db->where('type',$value);
+		$CI->db->where('perumahan_id',$value2);
 		$CI->db->where('deleted_at',NULL);
 		$CI->db->where('code', $CI->session->userdata('code'));
 		$query = $CI->db->get('kavling');
@@ -614,10 +810,11 @@ if ( ! function_exists('total_unit'))
 
 if ( ! function_exists('total_tersedia'))
 {
-	function total_tersedia($value)
+	function total_tersedia($value,$value2)
 	{
 		$CI =& get_instance();
 		$CI->db->where('type',$value);
+		$CI->db->where('perumahan_id',$value2);
 		$CI->db->where('deleted_at',NULL);
 		$CI->db->where('code', $CI->session->userdata('code'));
 		$CI->db->where('status', 1);
@@ -632,10 +829,11 @@ if ( ! function_exists('total_tersedia'))
 
 if ( ! function_exists('total_terjual'))
 {
-	function total_terjual($value)
+	function total_terjual($value,$value2)
 	{
 		$CI =& get_instance();
 		$CI->db->where('type',$value);
+		$CI->db->where('perumahan_id',$value2);
 		$CI->db->where('deleted_at',NULL);
 		$CI->db->where('code', $CI->session->userdata('code'));
 		$CI->db->where('status', 2);
@@ -650,10 +848,11 @@ if ( ! function_exists('total_terjual'))
 
 if ( ! function_exists('total_terpesan'))
 {
-	function total_terpesan($value)
+	function total_terpesan($value,$value2)
 	{
 		$CI =& get_instance();
 		$CI->db->where('type',$value);
+		$CI->db->where('perumahan_id',$value2);
 		$CI->db->where('deleted_at',NULL);
 		$CI->db->where('code', $CI->session->userdata('code'));
 		$CI->db->where('status', 3);
@@ -666,3 +865,386 @@ if ( ! function_exists('total_terpesan'))
 	}
 }
 
+if ( ! function_exists('total_unit1'))
+{
+	function total_unit1($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_tersedia1'))
+{
+	function total_tersedia1($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 1);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_terjual1'))
+{
+	function total_terjual1($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 2);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_terpesan1'))
+{
+	function total_terpesan1($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 3);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_tipe_perumahan'))
+{
+	function total_tipe_perumahan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('total_biaya'))
+{
+	function total_biaya($value)
+	{
+		$CI =& get_instance();
+		$CI->db->select('SUM(biaya) as total');
+		$CI->db->where('kategori_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('rab');
+		if ($query->num_rows() > 0) {
+			return $query->row()->total;
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('status_pengajuan'))
+{
+	function status_pengajuan($status,$id)
+	{
+		if($status == '1')
+		{
+			return '<a class="btn btn-xs btn-flat btn-success" data-toggle="tooltip" title="Disetujui"><i class="fa fa-check"></i></a>';
+		}
+		
+		else
+		{
+			return '<a class="btn btn-xs btn-flat btn-danger" href="'.site_url('penjualan/daftarpesan/terima/'.$id).'" data-toggle="tooltip" title="Ditolak"><i class="fa fa-minus"></i></a>';
+		}
+	}
+}
+
+if ( ! function_exists('status_persetujuan'))
+{
+	function status_persetujuan($status,$id)
+	{
+		if($status == '1')
+		{
+			return '<a class="btn btn-xs btn-flat btn-success" data-toggle="tooltip" title="Disetujui"><i class="fa fa-check"></i></a>';
+		}
+		else
+		{
+			return '<a class="btn btn-xs btn-flat btn-danger" href="'.site_url('penjualan/pengajuanunit/terima/'.$id).'" data-toggle="tooltip" title="Ditolak"><i class="fa fa-minus"></i></a>';
+		}
+	}
+}
+
+if ( ! function_exists('status_sertifikat'))
+{
+	function status_sertifikat($value)
+	{
+		if($value == '1')
+		{
+			return 'Pecahan';
+		}
+		else if ($value == '2')
+		{
+			return 'Induk';
+		}
+		else
+		{
+			return '-';
+		}
+	}
+}
+
+
+if ( ! function_exists('tinjauan_kembali'))
+{
+	function tinjauan_kembali($id)
+	{
+		$CI =& get_instance();
+		$CI->db->where('pesanunit_id',$id);
+		$CI->db->where('deleted_at',NULL);
+		$query = $CI->db->get('tinjauan');
+		if ($query->num_rows() > 0) {
+			return '<a class="btn btn-xs btn-flat btn-success" onclick="edit_tinjauan('."'".$id."'".');" data-toggle="tooltip" title="Tinjauan Ulang">Tinjuan Ulang</a>';
+		} else {
+			return '<a class="btn btn-xs btn-flat btn-danger" onclick="add_tinjauan('."'".$id."'".');" data-toggle="tooltip" title="Tinjauan Ulang">Tinjuan Ulang</a>';
+		}
+	}
+}
+
+if ( ! function_exists('penerimaan'))
+{
+	function penerimaan($id)
+	{
+		$penerimaan = 0;
+        $jumlahplus = 0;
+		$CI =& get_instance();
+		$master_rab = $CI->db->where('deleted_at',NULL)->order_by('id', 'ASC')->get('master_rab')->result();
+		if($master_rab): 
+			foreach($master_rab as $x):
+				$kategori_rab = $CI->db->where('deleted_at',NULL)->where('group_id', $x->id)->order_by('id', 'ASC')->get('rab_kategori')->result();
+				if($kategori_rab): 
+					foreach($kategori_rab as $y):
+						$rab = $CI->db->where('deleted_at',NULL)->where('kategori_id', $y->id)->where('perumahan_id', $id)->where('code', $CI->session->userdata('code'))->order_by('id', 'ASC')->get('rab')->result();
+						if($rab): 
+						foreach($rab as $z):
+							if($x->notasi === '+'){
+								if($z->kategori_id == $y->id){
+									$jumlahplus =+ $z->biaya;
+								}
+								$penerimaan += $jumlahplus;
+							}
+						endforeach;
+						endif;
+					endforeach;
+				endif;
+			endforeach;
+		endif;
+
+		return $penerimaan;
+	}
+}
+
+if ( ! function_exists('pengeluaran'))
+{
+	function pengeluaran($id)
+	{
+		$pengeluaran = 0;
+        $jumlahminus = 0;
+		$CI =& get_instance();
+		$master_rab = $CI->db->where('deleted_at',NULL)->order_by('id', 'ASC')->get('master_rab')->result();
+		if($master_rab): 
+			foreach($master_rab as $x):
+				$kategori_rab = $CI->db->where('deleted_at',NULL)->where('group_id', $x->id)->order_by('id', 'ASC')->get('rab_kategori')->result();
+				if($kategori_rab): 
+					foreach($kategori_rab as $y):
+						$rab = $CI->db->where('deleted_at',NULL)->where('kategori_id', $y->id)->where('perumahan_id', $id)->where('code', $CI->session->userdata('code'))->order_by('id', 'ASC')->get('rab')->result();
+						if($rab): 
+						foreach($rab as $z):
+							if($x->notasi === '-'){
+								if($z->kategori_id == $y->id){
+									$jumlahminus =+ $z->biaya;
+								}
+								$pengeluaran += $jumlahminus;
+							}
+						endforeach;
+						endif;
+					endforeach;
+				endif;
+			endforeach;
+		endif;
+
+		return $pengeluaran;
+	}
+}
+
+if ( ! function_exists('tersedia'))
+{
+	function tersedia($id, $type)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$id);
+		$CI->db->where('type',$type);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 1);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('terpesan'))
+{
+	function terpesan($id, $type)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$id);
+		$CI->db->where('type',$type);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 3);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('terjual'))
+{
+	function terjual($id, $type)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$id);
+		$CI->db->where('type',$type);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 2);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('jumlah_tipe'))
+{
+	function jumlah_tipe($id, $type)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$id);
+		$CI->db->where('type',$type);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('jumlah_tersedia'))
+{
+	function jumlah_tersedia($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 1);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('jumlah_terpesan'))
+{
+	function jumlah_terpesan($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 3);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('jumlah_terjual'))
+{
+	function jumlah_terjual($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$CI->db->where('status', 2);
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}
+
+if ( ! function_exists('jumlah_total'))
+{
+	function jumlah_total($value)
+	{
+		$CI =& get_instance();
+		$CI->db->where('perumahan_id',$value);
+		$CI->db->where('deleted_at',NULL);
+		$CI->db->where('code', $CI->session->userdata('code'));
+		$query = $CI->db->get('kavling');
+		if ($query->num_rows() > 0) {
+			return count($query->result());
+		} else {
+			return 0;
+		}
+	}
+}

@@ -24,16 +24,23 @@ class Pengguna_m extends MY_Model
     {
         $record = new stdClass();
         $record->id = '';
-        $record->nip = '';
-        $record->username = '';
-		$record->password = '';
-		$record->repassword = '';
-		$record->fullname = '';
-		$record->email = '';
-		$record->telpon = '';
+        $record->nama = '';
+		$record->username = '';
+        $record->tmlahir = '';
+        $record->tglahir = '';
+        $record->sex = '';
+        $record->agama = '';
+        $record->pendidikan = '';
+        $record->email = '';
+        $record->telpon = '';
+        $record->alamat = '';
 		$record->level = '';
         $record->active = '';
-		$record->gambar = '';
+        $record->avatar = '';
+		$record->password = '';
+		$record->repassword = '';
+		$record->perumahan_id = '';
+        
         return $record;
     }
 	
@@ -105,19 +112,76 @@ class Pengguna_m extends MY_Model
         $query = $this->db->get($this->table);
         return $query->row();
     }
-	
-	public function get_group()
+
+    public function get_agama()
 	{
-        $query = $this->db->order_by('id', 'ASC')->get('groups');
+        $query = $this->db->where('deleted_at', null)->order_by('id', 'ASC')->get('master_agama');
         if($query->num_rows() > 0){
-        $dropdown[''] = 'Pilih Group/Tingkatan Pengguna';
+        $dropdown[''] = 'Pilih Agama/Kepercayaan';
 		foreach ($query->result() as $row)
 		{
-			$dropdown[$row->id] = $row->name;
+			$dropdown[$row->id] = $row->agama;
 		}
         }else{
-            $dropdown[''] = 'Belum Ada Group/Tingkatan Pengguna Tersedia'; 
+            $dropdown[''] = 'Belum Ada Agama Tersedia'; 
         }
 		return $dropdown;
+    }
+    
+    public function get_pendidikan()
+	{
+        $query = $this->db->order_by('id', 'ASC')->where('deleted_at',null)->get('master_pendidikan');
+        if($query->num_rows() > 0){
+        $dropdown[''] = 'Pilih Tingkat Pendidikan';
+		foreach ($query->result() as $row)
+		{
+			$dropdown[$row->id] = $row->pendidikan;
+		}
+        }else{
+            $dropdown[''] = 'Belum Ada Tingkat Pendidikan Tersedia'; 
+        }
+		return $dropdown;
+	}
+	
+	public function get_level()
+	{
+        $query = $this->db->order_by('id', 'ASC')->where('deleted_at',null)->get('master_level');
+        if($query->num_rows() > 0){
+        $dropdown[''] = 'Pilih Tingkatan Pengguna';
+		foreach ($query->result() as $row)
+		{
+			$dropdown[$row->id] = $row->level;
+		}
+        }else{
+            $dropdown[''] = 'Belum Ada Tingkatan Pengguna Tersedia'; 
+        }
+		return $dropdown;
+	}
+
+    public function get_perumahan()
+    {
+        $query = $this->db->order_by('id', 'ASC')->where('deleted_at',null)->get('master_perumahan');
+        if($query->num_rows() > 0){
+        foreach ($query->result() as $row)
+        {
+            $dropdown[$row->id] = $row->perumahan;
+        }
+        }else{
+            $dropdown[''] = 'Belum Ada Perumahan Tersedia'; 
+        }
+        return $dropdown;
+    }
+
+    function get_users_perumahan($id=null)
+    {
+		$this->db->where('user_id', $id);
+		$this->db->where('deleted_at', NULL);
+        $query = $this->db->get('users_perumahan');
+		if($query->num_rows() > 0){
+			return $query->result();	
+		}else{
+			//show_404();
+			return FALSE;
+		}
 	}
 }

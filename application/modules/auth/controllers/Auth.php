@@ -18,15 +18,7 @@ class Auth extends CI_Controller {
 	public function index()
 	{
 		//echo password_hash('admin', PASSWORD_BCRYPT);
-		// $ck = new S3('521ee9cfe9a63237681e','iH9o9sfTxbE2ZsgbS5sGPCapMDtS8la4HoXPQgBi','cdn.julak.id');
-		// $bucket_name = 'cdn.julak.id';
-		// var_dump($ck->listBuckets());
-		// var_dump($ck->putObject('Huruf yang panjang', $bucket_name, 'cdn.julak.id.kilatstorage.com/index', S3::ACL_PUBLIC_READ));
-		// var_dump($ck->myGetBucket($bucket_name)); // thumb 200x200
-		// $myBucket = $ck->myGetBucket($bucket_name);//$ck->putObjectFile('/data/app/dev/git/saka/recehan/asset/dist/img/avatar.png', $bucket_name, "/"."ugitestfile.png", S3::ACL_PUBLIC_READ, $metaHeaders = array(), $contentType = null);//$ck->getObjectInfo($bucket_name);//$ck->myGetBucket($bucket_name);
 		
-		// die("<script> console.log(JSON.parse('".json_encode($myBucket)."'));</script>");
-		// var_dump($ck->getObjectInfo($bucket_name),'index');
 		$data['title'] 		= 'SIGN IN';
 		$data['record'] 	= $this->data->get_all();
 		$data['content'] 	= $this->folder.'default';
@@ -51,15 +43,15 @@ class Auth extends CI_Controller {
 			if($this->_resolve_user_login($email_post, $pass_post)){
 				
 				$user_ID = $this->_get_userID($email_post);
-				$username = $this->_get_username($email_post);
+				$nama = $this->_get_name($email_post);
 				$ip_address = $this->input->ip_address();
 				$level = $this->_get_level($email_post);
 				$code = $this->_get_code($email_post);
 				$gambar = $this->_get_gambar($email_post);
 				
 				$create_session = array(
-					'userID'=> $user_ID,
-					'username' => $username,
+					'userid'=> $user_ID,
+					'nama'=> $nama,
 					'ip_address'=> $ip_address,
 					'signin' => TRUE,
 					'level' => $level,
@@ -91,8 +83,8 @@ class Auth extends CI_Controller {
 		return $userID;
 	}
 	
-	private function _get_username($email_post){
-		$username = $this->data->get_username($email_post);
+	private function _get_name($email_post){
+		$username = $this->data->get_name($email_post);
 		return $username;
 	}
 	
